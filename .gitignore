@@ -1,0 +1,6 @@
+# .gitignore 현재 프로젝트의 vs code 설정 정보가 들어 있는 폴더
+# 
+
+.idea
+.vscode
+.DS_Store
