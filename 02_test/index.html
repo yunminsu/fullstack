@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<!-- lang(language)은 문서의 언어를 명시하는 속성으로 기본값 en은 ko로 바꿔주면 번역 알림이 안뜸 -->
+<html lang="ko">
+<head>
+  <!-- 문서의 정보는 <head> 태그 안에 작성 -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <!-- 문서의 제목을 정의  -->
+  <title>Test</title>
+
+  <!-- CSS, JS 연결하기 -->
+  <!-- 외부 스타일 시트 -->
+  <link rel="stylesheet" href="./css/main.css">
+
+  <!-- 외부 스크립트 -->
+  <script src="js/main.js"></script>
+  <!-- 내부 스크립트 -->
+  <script>
+    console.log('내부 스크립트');
+  </script>
+
+  <!-- 내부 스타일 시트 
+    여러 HTML 문서에서 같은 스타일이 반복될 경우,
+    해당 스타일 규칙을 HTML 문서마다 반복 작성
+    스타일 수정 시 여러 HTML 문서를 모두 수정해야 하므로 비효율적 => 지양
+  -->
+  <style>
+    div {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div>Hello world!</div>
+
+  <!-- heropy.blog에서 로고 이미지 따오기 -->
+  <img src="./images/logo.png" alt="로고">
+  <img src="https://heropy.blog/css/images/logo.png" alt="로고" title="로고입니당">
+
+  <img src="images/logo.png" alt="로고">
+  <img src="images/logo.png" alt="로고">
+
+  <div class="logo"></div>
+</body>
+</html>
