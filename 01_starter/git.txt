@@ -52,3 +52,9 @@ git pull origin main
 불필요한 파일들은 올리지 않는 것이 좋음
 .gitignore 파일을 만들어서 올리지 않을 폴더나 파일을 명시하면 됨
 그러면 git에서 해당 폴더랑 파일을 무시함
+
+과제:
+파일을 새로 만들거나 수정하면서 commit을 5번 이상 해보기
+중간중간 git status, git log도 써보기
+
+파일 수정
