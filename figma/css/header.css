@@ -1,0 +1,23 @@
+.headerwapper {
+  width: 1903px;
+  height: 100px;
+}
+
+.headerinner {
+  width: 1280px;
+  height: 100px;
+  padding-top: 12px;
+  align-items: center;
+  margin: 0 auto;
+}
+
+.inputserach {
+  width: 450px;
+  height: 50px;
+  position: relative;
+  border-radius: 25px;
+}
+
+.headermenu {
+  display: flex;
+}
