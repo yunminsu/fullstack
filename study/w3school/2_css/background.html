@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 예제 1번 
+      Set the background color of the <h1> element to "lightblue". 
+      (<h1> 요소의 배경색을 "lightblue"로 설정)
+    */
+    /* h1 {
+      background-color: lightblue;  
+    } */
+
+    /* 예제 2번 
+      Set "ms.jpg" as the background image of the page. 
+      (페이지의 배경 이미지로 "ms.jpg"로 설정)
+    */
+    /* body {
+      background-image: url("./images/ms.jpg");
+    } */
+
+    /* 예제 3번 
+      Make the background image repeat only vertically. 
+      (배경이미지가 수직으로만 반복)
+    */
+    /* body {
+      background-image: url("./images/ms.jpg");
+      background-repeat: repeat-y;
+    } */
+    
+    /* 예제 4번 
+      Specify that the background image should be shown once, in the top right corner. 
+      (배경이미지가 오른쪽 상단에 한 번 표시)
+    */
+    /* body {
+      background-image: url("./images/ms.jpg");
+      background-repeat: no-repeat;
+      background-position: top right;
+    } */
+
+    /* 예제 5번 
+      Use the correct background property to make the background image NOT scroll with the rest of the page.
+      (배경 이미지가 페이지의 나머지 부분과 함께 스크롤되지 않도록 하려면 올바른 배경 속성을 사용)
+    */
+    body {
+      background-image: url("./images/ms.jpg");
+      background-attachment: fixed;
+    }
+  </style>
+</head>
+<body>
+  <h1>This is a heading</h1>
+  <p>This is a paragraph</p>
+  <p>This is a paragraph</p>
+</body>
+</html>
