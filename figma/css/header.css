@@ -1,3 +1,15 @@
+
+.logobtn {
+  position: relative;
+  display: block;
+  width: 195px;
+  height: 38px;
+  padding-right: 31px;
+  text-indent: -9999px;
+  background: url(../images/logo.png) no-repeat;
+  background-size: 195px auto;
+}
+
 .headerwapper {
   width: 1903px;
   height: 100px;
@@ -19,5 +31,7 @@
 }
 
 .headermenu {
+  width: 500px;
+  padding-right: 2px;
   display: flex;
 }
