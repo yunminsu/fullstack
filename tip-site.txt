@@ -1,0 +1,25 @@
+site
+1. 
+* 학습
+- w3schools.com
+
+2.
+* 브라우저 별 사용 가능 확인
+- caniuse.com
+ex) box-orient 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+tip

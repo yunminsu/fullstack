@@ -25,7 +25,38 @@
       height: 200px;
       background-color: rgba(129, 126, 126, 0.5);
       border-radius: 6px;
+
+      /* 영역까지 사라짐 */
+      /* display: none; */
+      /* 영역은 차지함 */
+      /* visibility: hidden; */
     }
+
+    .parent {
+      width: 100px;
+      height: 100px;
+      padding: 30px;
+      background-color: royalblue;
+    }
+
+    .child {
+      width: 200px;
+      height: 100px;
+      background-color: orange;
+
+      /* 0과 1사이의 소수를 사용하여 투명도를 지정 */
+      /* opacity: 1; */
+      /* opacity: 0.5; */
+
+      /* 소수점에서 앞의 정수 부분을 생략 가능 */
+      opacity: .5;
+    }
+
+    /* a {
+      width: 100px;
+      height: 100px;
+      display: block;
+    } */
   </style>
   <script>
     function showModal() {
@@ -50,8 +81,27 @@
 
   <button type="button" onclick="showModal()">열기</button>
   <button type="button" onclick="hideModal()">닫기</button>
+
+  <br>
+
+  <div class="parent">
+    <div class="child"></div>
+  </div>
+
+  <!-- <br>
+
+  <a>아아</a> -->
 </body>
 </html>
+
+<!-- (정리) Quiz
+  Q1: HTML <a></a>에 가로 너비를 지정하기 위해 사용 해야하는 속성과 값은?
+  A1: display: block;
+
+  Q2: opacity 속성의 기본값은?
+  A2: 1   => 1 (요소는 기본적으로 불투명함)
+
+-->
 
 <!-- (참고) 팝업창(Popup) VS 모달창(Modal)
   1. 팝업창(Popup): 
