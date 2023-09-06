@@ -58,7 +58,7 @@
     .sub-description {
       /* 화면이 작을 때는 80%만, 넓어지면 최대 700px 까지 */
       width: 80%;   /* 부모 width의 80% */ 
-      max-width: 700px;
+      max-width: 700px;   /* 최대 늘어나는 너비 */
       padding: 10px;
       background-color: #eee;
       border-radius: 20px;
@@ -77,10 +77,14 @@
       /* margin: 0 auto; 또는 auto; 값이 있어야함 */
     }
 
-    .main-button {
-      
+    .history {
+      background-color: #aeaeae;
+      padding: 100px 20px 40px;
     }
 
+    .history > h4 {
+      text-align: center;
+    }
   </style>
 
 </head>
