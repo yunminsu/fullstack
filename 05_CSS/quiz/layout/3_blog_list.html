@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* 공통 스타일은 앞부분에 작성 */
+    ul {
+      list-style: none;
+    }
+    a {
+      color: #000;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    span {
+      font-weight: bold;
+    }
+
+    ul.navbar {
+      display: flex;
+    }
+
+    .navbar > li {
+      width: 100px;
+      margin: 5px;
+      padding: 10px;
+      border-radius: 15px 5px 5px 0;
+      text-align: center;
+      background-color: beige;
+    }
+
+    .navbar > li:hover {
+      background-color: burlywood;
+    }
+
+    .container-1 {
+      width: 1200px;
+      height: 250px;
+      display: flex;
+      margin: 0 auto;
+    }
+
+    .blog-content {
+      width: 80%;
+      height: 100%;
+    }
+
+    .content-header {
+      display: flex;
+      
+    }
+
+    .user {
+      margin-left: 10px;
+    }
+
+    #profile-img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      margin: auto 0;
+    }
+
+    .content-text {
+      margin-top: 50px;
+    }
+    .blog-img {
+      width: 20%;
+      height: 100%;
+    }
+
+    #text-img {
+      width: 100%;
+      height: 100%;
+    }
+  </style>
+  <script>
+    </script>
+</head>
+<body>
+  <!-- Tip! 레이아웃을 만드는 기본
+    뭘 만들든 레이아웃은 항상 박스부터 만들고 시작하면 됨
+    그리고 이 박스들을 전부 <div>로 구현해놓으면 됨(물론 시멘틱 태그도 최대한 활용)
+    그리고 안에 글 넣고 그림 넣고 하면 끝!
+
+    이때 <div>는 블록 요소이기 때문에 위아래로 배치
+    좌우로 나란히 배치하고 싶으면 float(X), inline-block(△, 간단한건 얘로), Flexbox(O)
+  -->
+
+  <!-- navbar -->
+  <nav>
+    <ul class="navbar">
+      <li><a href="#">영화</a></li>
+      <li><a href="#">맛집</a></li>
+      <li><a href="#">IT</a></li>
+      <li><a href="#">컴퓨터</a></li>
+    </ul>
+
+  </nav>
+  <!-- blog list item -->
+  <section>
+    <div class="container">
+      <div class="container-1">
+        <div class="blog-content">
+          <div class="content-header">
+          <!-- 프로필 이미지 -->
+          <!-- 작성자, 시간 -->
+            <img src="../../images/logo_resize.png" alt="프로필이미지" id="profile-img">
+            <div class="user">
+            <p><span>윤민수</span></p>
+            <p>1시간 전</p>
+            </div>
+          </div>
+          <div class="content-text">
+            <p>
+              <span>Lorem ipsum dolor sit amet consectetur adipisicing elit.</span><br><br>
+              Eos ut dolores magni facilis illo. Ullam mollitia suscipit ducimus expedita tempore<br> 
+              similique itaque odio officiis sequi necessitatibus. Dolor nostrum reiciendis minus?
+            </p>
+
+          </div>
+        </div>
+      <div class="blog-img">
+        <img src="../../images/orange.jpg" alt="사진" id="text-img">
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+</html>

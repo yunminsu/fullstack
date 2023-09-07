@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    /* .text-input {
+      width: 120px;
+      padding: 10px;
+      font-size: 20px;
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      outline: none;
+    } */
+
+    .input-text {
+      width: 100%;
+      padding: 10px;
+      font-size: 20px;
+      border: 1px solid gray;
+      border-radius: 5px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    textarea {
+      width: 100%;
+      padding: 10px;
+      border-radius: 5px;
+      box-sizing: border-box;
+      outline: none;
+    }
+
+    .form-background {
+      height: 1000px;
+      padding: 0.1px;
+      background-color: #000;
+    }
+
+    .form-container {
+      width: 70%;
+      height: 80%;
+      margin: 100px auto;
+      background-color: #fff;
+    }
+
+    .form {
+      padding: 60px;
+     
+    }
+
+    .form-name {
+      width: 100%;
+      display: flex;
+      column-gap: 50px;
+    }
+
+    .meseage {
+      display: flex;
+      justify-content: space-between;
+      margin: -30px 60px;
+    }
+
+    .send_btn {
+      width: 80px;
+      padding: 10px;
+      background-color: red;
+    }
+
+    .transition {
+      transition: 2s;
+    }
+
+    .transition:focus {
+      border: 1px solid red;
+    }
+  </style>
+</head>
+<body>
+  <h2>연습</h2>
+  <form>
+    <input type="text">
+    <input type="text" class="text-input">
+    <button type="submit">전송</button>
+    <!-- form안에서 버튼의 타입을 안써주면 기본 submit으로 동작함 -->
+
+    <br>
+
+    <!-- input 태그 쓸 때 label 태그도 같이 사용(권장) -->
+    <p>
+      <label for="">Your Name</label>
+    </p>
+    <input type="text" id="" class="text-input">
+  </form>
+
+  <h2>실전</h2>
+    <div class="form-background">
+      <div class="form-container">
+        <form>
+          <div class="form">
+            <h3>Contact Us</h3>
+          <div>
+            <p>
+              <label for="">Your email</label>
+            </p>
+            <input type="text" id="email" class="input-text transition" placeholder="email@example.com">
+          </div>
+
+          <div class="form-name">
+            <div style="flex: 1;">
+              <p>
+                <label for="fs-name">Fist Name</label>
+              </p>
+              <input type="text" id="fs-name" class="input-text transition">
+            </div>
+
+            <div style="flex: 1;">
+              <p>
+                <label for="ls-name">Last Name</label>
+              </p>
+              <input type="text" id="ls-name" class="input-text transition">
+            </div>
+          </div>
+          <div class="form-meseage">
+            <p>
+              <label for="txt-meseage">Meseage</label>
+            </p>
+            <textarea id="txt-meseage" cols="30" rows="10" class="transition" style="resize: none;" ></textarea>
+          </div>
+        </div>
+          
+          <div class="meseage">
+              <div>
+              <input type="checkbox">Agree
+              </div>
+              <button type="submit" class="send_btn">SEND</button>
+            </div>
+        </form>
+        </div>
+
+
+
+
+
+
+    </div>
+</body>
+</html>
