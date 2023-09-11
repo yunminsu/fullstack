@@ -5,10 +5,20 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Document</title>
   <style>
-    body {
-      background-color:
+    .nav-container {
+      height: 40px;
+      display: flex;
+      justify-content: space-between;
+      padding: 0 10px;
+      align-items: center;
     }
-    
+
+    .nav-sub {
+      display: flex;
+      column-gap: 20px;
+      list-style: none;
+    }
+
     .main {
       position: relative;
     }
@@ -16,7 +26,7 @@
     div.bg {
       height: 500px;
       width: 100%;
-      background-image: url(../images/ocean.jpg);
+      background-image: url(../../images/ocean.jpg);
       background-repeat: no-repeat;
       background-position: center;
       background-size: cover;
@@ -76,6 +86,20 @@
   </style>
 </head>
 <body>
+  <!-- 추가 과제: flex 내비게이션 -->
+  <nav class="nav-container">
+    <h1>Shoes Shop</h1>
+    <!-- 로고와 메뉴 사이를 띄우는 2가지 방법 
+      1)justify-content: space-between;
+      2)flex-grow: 1;
+      => <div style="flex-grow: 1;"></div>
+    -->
+    <ul class="nav-sub">
+      <li>Produts</li>
+      <li>Services</li>
+    </ul>
+  </nav>
+
   <div class="main">
     <div class="bg">
       <h4>저녁 노을</h4>

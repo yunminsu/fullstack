@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    table {
+      width: 100%;
+      height: 200px;
+      border-collapse: collapse;
+    }
+
+    table tr:first-child {
+      text-align: center;
+    }
+
+    table tr td:nth-child(2) {
+      /* 의미: 다른 셀들은 최소 폭을 가져가면서 해당 셀은 최대 400px까지 늘어남 */
+      width: 400px;
+      /* (참고) 셀 블록마다 width를 설정해줄 수 있음 
+        하나의 td에 width를 주어도 전체 열의 width가 변함
+      */
+    }
+
+    table tr td:nth-child(n+3) {
+      text-align: center;
+    }
+
+    table tr:last-child {
+      text-align: end;
+      border: none;
+    }
+
+    tr {
+      height: 50px;
+      border-bottom: 1px solid #000;
+    }
+    
+    td {
+      padding: 10px;
+    }
+
+    button {
+      width: 100px;
+      height: 50px;
+      border-radius: 15px;
+      cursor: pointer;
+      color: #fff;
+      border: none;
+      background-color: orange;
+    }
+
+    button:hover {
+      background-color: red;
+    }
+
+    button:active {
+      background-color: #000;
+    }
+
+    .inner {
+      width: 100%;
+      max-width: 700px;
+      margin: 0 auto;
+    }
+
+    .cart-img {
+      width: 50px;
+    }
+
+    .cart-background {
+      width: 100%;
+      background-color: lightsteelblue;
+      padding: 30px;
+    }
+
+    .cart-list {
+      background-color: #fff;
+      border-radius: 10px;
+    }
+
+    .buy {
+      margin-top: 30px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+
+
+
+  </style>
+</head>
+<body>
+  <div class="cart-background">
+    <!-- 가운데 정렬을 위한 div -->
+    <div class="inner">
+      <h2>나의 장바구니</h2>
+      <table class="cart-list">
+        <!-- 4행 5열 -->
+
+        <tr>
+          <th></th>
+          <th>ITEM</th>
+          <th>AMOUNT</th>
+          <th>PRICE</th>
+          <th>TOTAL</th>
+        </tr>
+
+        <tr>
+          <td><img src="../../images/logo_resize.png" alt="상품이미지" class="cart-img"></td>
+          <td>카메라</td>
+          <td>1</td>
+          <td>100,000</td>
+          <td>100,000</td>
+        </tr>
+
+        <tr>
+          <td><img src="../../images/logo_resize.png" alt="상품이미지" class="cart-img"></td>
+          <td>신발신발신발</td>
+          <td>2</td>
+          <td>59,000</td>
+          <td>118,000</td>
+        </tr>
+        <tr>
+          <!-- <td></td>
+          <td></td>
+          <td></td>
+          <td></td> -->
+          <td colspan="5">총가격: 218,000</td>
+        </tr>
+      </table>
+
+      <div class="buy">
+        <a href="#">계속 쇼핑하기</a>
+        <button type="button">구매하기</button>
+      </div>
+    </div>
+
+
+  </div>
+</body>
+</html>

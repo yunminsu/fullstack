@@ -1,0 +1,167 @@
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  font-family: Dotum, '돋움', sans-serif;
+  background-color: #f5f6f7;
+}
+
+a {
+  text-decoration: none;
+  color: #000;
+}
+
+input, select {
+  width: 100%;
+  height: 51px;
+  font-size: 16px;
+  border: 1px solid #dadada;
+  padding: 10px 14px;
+}
+
+input::placeholder {
+  font-size: 16px;
+}
+
+button {
+  color: #fff;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  background-color: #17b75e;
+}
+
+button:hover {
+  background-color: #094b26;
+  border: 1px solid #000;
+}
+
+label {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+/* 헤더 영역 */
+header {
+  width: 100%;
+}
+
+header .top {
+  max-width: 768px;
+  height: 124px;
+  margin: 0 auto;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* 메인 영역 */
+#container {
+  max-width: 768px;
+  margin: 0 auto;
+}
+
+#container .section-input {
+  width: 460px;
+  height: 996px;
+  margin: 0 auto;
+}
+
+input, select, button {
+  margin: 10px auto;
+  transition: 0.3s;
+}
+
+input:focus {
+  background-color: #eee;
+  border: 1px solid #17b75e;
+}
+
+select:hover {
+  background-color: #eee;
+  border: 1px solid #17b75e;
+}
+
+.section-input p:nth-child(7) {
+  margin-top: 40px;
+}
+
+.section-input p:nth-child(15) {
+  margin-top: 40px;
+}
+
+.input-group-row {
+  position: relative;
+}
+
+.input-group-row span {
+  position: absolute;
+  color: #ccc;
+  right: 15px;
+  top: 25px;  
+}
+
+.bir-group {
+  display: flex;
+  column-gap: 10px;
+}
+
+.phone-group {
+  display: flex;
+  column-gap: 20px;
+}
+
+.phone-btn {
+  width: 35%;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 50px;
+}
+
+/* 푸터 영역 */
+footer {
+  width: 100%;
+}
+
+footer .bottom {
+  max-width: 768px;
+  height: 83px;
+  margin: 0 auto;
+  font-size: 12px;
+  color: #aaa;
+
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bt-menu {
+  margin: 0 auto;
+}
+
+.bt-menu a {
+  margin: 0 3px;
+  padding: 0 10px 0 0;
+  color: inherit;
+}
+
+.bt-menu a:hover {
+  color: #17b75e;
+  text-decoration: underline;
+}
+
+.bt-menu a:nth-child(-n+4) {
+  border-right: 1px solid #aaa;
+}
+
+.copyright {
+  padding-top: 10px;
+}

@@ -9,14 +9,17 @@
       width: 500px;
       height: 500px;
       background-color: black;
+      padding: 30px;
+      margin: 0 auto;
     }
 
     .content {
       width: 300px;
       height: 300px;
+      padding: 30px;
       background-color: aqua;
 
-      margin: 0 auto;
+      margin: 30px auto;
     }
 
     .submit {
@@ -28,17 +31,22 @@
 
     input {
       width: 80%;
-
       border: 2px solid #eee;
+      display: block;
+      margin: 0 auto;
       box-sizing: border-box;
     }
 
     button {
       width: 50%;
       display: block;
+      margin: 0 auto;
     }
 
-
+    label {
+      padding-left: 30px;
+      
+    }
   </style>
 
 </head>
@@ -46,7 +54,18 @@
   <div class="container">
     <div class="content">
       <div class="submit">
-      <input type="text"><p>가가</p>
+        <p>
+          <label>아이디</label>
+        </p>
+        <input type="text">
+        <p>
+          <label>아이디</label>
+        </p>
+        <input type="text">
+        <p>
+          <label>아이디</label>
+        </p>
+      <input type="text">
       <button>가입하기</button>
       </div>
     </div>
