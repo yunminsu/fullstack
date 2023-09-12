@@ -81,7 +81,7 @@ input:focus {
   border: 1px solid #17b75e;
 }
 
-select:hover {
+select:focus, select:hover {
   background-color: #eee;
   border: 1px solid #17b75e;
 }
