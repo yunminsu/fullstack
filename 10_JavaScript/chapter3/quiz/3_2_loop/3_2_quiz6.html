@@ -8,18 +8,26 @@
   <script>
     // 문제6
     // do while문을 이용하여 0부터 10미만의 정수 중에서 짝수만을 큰 수부터 출력하세요.
-    let i = 0;
 
-    do {
-      document.write(i);
-      i++;
-    } while ( i < 10); {
-      if (i % 2 === 0) {
-      }
-    }
+    // ** 내가 푼거 **
+    // let i = 0;
+
+    // do {
+    //   document.write(i);
+    //   i++;
+    // } while ( i < 10); {
+    //   if (i % 2 === 0) {
+    //   }
+    // }
 
     // 풀이6
-    
+    let i = 9;
+    do {
+      if (i % 2 === 0) {
+        document.write(i, '<br>');
+      }
+      i--;
+    } while (i >= 0);
   </script>
 </head>
 <body>

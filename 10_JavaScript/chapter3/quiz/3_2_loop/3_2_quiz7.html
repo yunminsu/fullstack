@@ -30,22 +30,35 @@
     table    += '</table>';
     document.write(table);
 
-    let sum = 0;
+    // ** 내가  푼거 **
+    // let sum = 0;
 
-    document.write('<table border="1">')
+    // document.write('<table border="1">')
 
-    for (let i = 1; i <= 5; i++) {
-      for (let j = 1; j <= 5; j++) {
-        sum++;
-        document.write('<td>' + sum + '</td>');
-      }
-      document.write('<tr></tr>');
-    }
-    document.write('</table>');
+    // for (let i = 1; i <= 5; i++) {
+    //   for (let j = 1; j <= 5; j++) {
+    //     sum++;
+    //     document.write('<td>' + sum + '</td>');
+    //   }
+    //   document.write('<tr></tr>');
+    // }
+    // document.write('</table>');
     
     // 풀이7
     // 이중 for문 이용
-    
+    let num = 1;
+    let html = '<table border="1">';
+
+    for (let i = 1; i <= 5; i++) { // 행
+      html += '<tr>';
+      for (let j = 1; j <= 5; j++) { // 열
+        html += '<td>' + num + '</td>';
+        num++;
+      }
+      html += '</tr>';
+    }
+    html += '</table>';
+    document.write(html);
   </script>
 </head>
 <body>

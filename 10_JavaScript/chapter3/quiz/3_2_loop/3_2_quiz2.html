@@ -11,17 +11,22 @@
     // (단, 4는 출력에서 제외)
     
     // ** 내가 푼거 **
-    for (let i = 0; i < 10; i++) {
-      if (i % 2 === 0) {
-        if(i === 4) {
-          continue;
-        }
-        document.write(i);
-      }
-    }
+    // for (let i = 0; i < 10; i++) {
+    //   if (i % 2 === 0) {
+    //     if(i === 4) {
+    //       continue;
+    //     }
+    //     document.write(i);
+    //   }
+    // }
 
     // 풀이2
-    
+    for (let i = 0; i < 10; i++) {
+      if (i === 4) continue;
+      if (i % 2 === 0) {
+        document.write(i, '<br>');
+      }
+    }
   </script>
 </head>
 <body>
