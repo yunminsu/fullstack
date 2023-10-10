@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script>
+    // 문제2
+    // 이름을 영문으로 입력받은 후 대문자로 바꿔 출력하고
+    // 연락처를 입력받은 후 정보가 노출되지 않도록 뒤의 네자리는 ****로 출력하세요.
+
+    // ** 내가 푼거 **
+    const name = prompt('이름을 입력하세요.');
+    document.write(name.toUpperCase(), '<br>'); 
+
+    const number = prompt('연락처를 입력하세요.');
+    const masknumber = number.substring(0, number.length - 4) + '****';
+    document.write(masknumber);
+
+    // 풀이2
+    
+  </script>
+</head>
+<body>
+  
+</body>
+</html>
