@@ -28,15 +28,24 @@
     // }
 
     // {for of문으로 사용하면 더 간단해짐, 개발(실무)할때 of문을 많이씀}
-    for (const s of str) { 
-      if (s % 2 === 0) {
-        result.push('-');
-      }
-      result.push(s);
-    }
-    console.log(result);
+    // for (const s of str) { 
+    //   if (s % 2 === 0) {
+    //     result.push('-');
+    //   }
+    //   result.push(s);
+    // }
+    // console.log(result);
 
     // {스플릿으로 쪼갠다음 대시를 반복문으로 넣는 방법도 있다! 한번 해보기}
+    const strNum = str.split('');
+
+    for (let i = 0; i < strNum.length; i++) {
+      if (strNum[i] % 2 === 0) {
+        result.push('-');
+      }
+      result.push(strNum);
+    }
+    console.log(result);
   </script>
 </head>
 <body>
