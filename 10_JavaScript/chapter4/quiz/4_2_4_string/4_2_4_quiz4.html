@@ -39,11 +39,11 @@
     // {스플릿으로 쪼갠다음 대시를 반복문으로 넣는 방법도 있다! 한번 해보기}
     const strNum = str.split('');
 
-    for (let i = 0; i < strNum.length; i++) {
-      if (strNum[i] % 2 === 0) {
+    for (const n of strNum) {
+      if (n % 2 === 0) {
         result.push('-');
       }
-      result.push(strNum);
+      result.push(n);
     }
     console.log(result);
   </script>

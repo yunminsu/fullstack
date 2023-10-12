@@ -21,41 +21,47 @@
 
     const money = Number(prompt('돈을 넣어주세요.', '0'));
     let change = 0; // 거스름돈
-    let price;
 
-    if (money) {
-      const snack = prompt('과자 종류: 허니버터(1300원), 칸쵸(1500원), 프링글스(3000원)');
+    // ** 내가 푼거 **
+    // let price;
 
-      switch (snack) {
-        case '허니버터':
-          price = 1300;
-          break;
-        case '칸쵸':
-          price = 1500;
-          break;
-        case '프링글스':
-          price = 3000;
-          break;
-        default:
-          alert(snack + '은 없는 과자입니다.');
-          location.reload();
-          break;
-        }
+    // if (money) {
+    //   const snack = prompt('과자 종류: 허니버터(1300원), 칸쵸(1500원), 프링글스(3000원)');
 
-        if (money >= price) {
-          change = money - price;
-          document.write('과자: ' + snack, '<br>거스름돈: ' + change);
-        } else if (money < price) {
-          alert('잔액이 부족합니다.');
-          location.reload();
-        }
-    } else {
-        alert('돈을 잘못넣었습니다.');
-        location.reload();
-      }
+    //   switch (snack) {
+    //     case '허니버터':
+    //       price = 1300;
+    //       break;
+    //     case '칸쵸':
+    //       price = 1500;
+    //       break;
+    //     case '프링글스':
+    //       price = 3000;
+    //       break;
+    //     default:
+    //       alert(snack + '은 없는 과자입니다.');
+    //       location.reload();
+    //       break;
+    //     }
+
+    //     if (money >= price) {
+    //       change = money - price;
+    //       document.write('과자: ' + snack, '<br>거스름돈: ' + change);
+    //     } else if (money < price) {
+    //       alert('잔액이 부족합니다.');
+    //       location.reload();
+    //     }
+    // } else {
+    //     alert('돈을 잘못넣었습니다.');
+    //     location.reload();
+    //   }
 
     // 풀이
-
+    if (money <= 0 || isNaN(money)) { // 정상적인 돈 값이 입력되지 않았을 때
+      alert('돈을 다시 넣어주세요.');
+      location.reload(); // 새로고침
+      
+    }
   </script>
 </head>
 <body>
