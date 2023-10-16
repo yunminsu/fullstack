@@ -7,3 +7,6 @@ Set, Map
 optional chaining
 try catch 에러 핸들링
 다 끝나면 React 배움
+
+10월 16일
+10/17 평가 자바스크립트~es6차 10번까지
