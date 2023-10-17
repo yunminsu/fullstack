@@ -24,6 +24,9 @@ ex) box-orient
 * 배포
 - netlify
 
+7.
+* React 개발 질문
+- stack overflow 
 
 
 
@@ -35,3 +38,4 @@ ex) box-orient
 
 
 tip
+1. React가 빠른이유 Virtual DOM(가상 돔)사용

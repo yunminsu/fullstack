@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <script>
+
+    // 2번
+    // const yourName = prompt('당신의 이름은?');
+    
+    // if (yourName) {
+    //   alert(`${yourName}님 환영합니다!`);
+    // }
+
+    // 3번
+    // const userId = prompt('아이디 입력');
+    // let user = userId || 'guest';
+
+    // alert(`${user}님 환영합니다!`);
+
+    // 4번
+    // let sum = 0;
+
+    // for (let i = 1; i <= 100; i++) {
+    //   if (i % 2 === 0) {
+    //     sum += i;
+    //   }
+    // }
+    // document.write(sum);
+
+    // 5번
+    // for (let i = 1; i <= 6; i++) {
+    //   for (let k = 1; k <= 6; k++) {
+    //     if (i + k === 6) {
+    //      document.write(`[${i}, ${k}] <br>`);
+    //     }
+    //   }
+    // }
+
+    // 6번
+    // const fileName = '기획서 수정.최종본.진짜마지막.PDF';
+    // const fileExt = fileName.substring(17);
+    // console.log(fileExt.toLowerCase());
+
+    // 7번
+    // const hello = (val => 'Hello' + val);
+    // console.log(hello('World'));
+
+    // 8번
+    const race = '100m dash';
+    const runners = ['Kim', 'Lee', 'Park'];
+
+    // const results = runners.map(function (runner, index) {
+    // return {
+    //   name: runner,
+    //   race: race,
+    //   place: index + 1
+    //  };
+    // });
+    // console.log(results);
+    
+    const results1 = runners.map((runner, index) => 
+      ({
+        name: runner,
+        race: race,
+        place: index + 1
+      })
+    );
+    console.log(results1);
+
+    // 9번
+    // const name = 'JH Kim';
+    // const age = 30;
+    // const hobby = 'badminton';
+    // const greeting = `Hello my name is ${name}. I'm ${age} years old. My hobby is playing ${hobby}.`;
+    // console.log(greeting);
+    
+    // 10번
+    // const action = {
+    // type: 'action/name',
+    // payload: {
+    //   id: '1',
+    //   title: '메인 화면 구성하기',
+    //   content: '메인 이미지와 아이템 목록 만들기',
+    //   done: true
+    //   }
+    // };
+
+    // const { type, payload: { id, title, content, done }} = action;
+    // console.log(type, id, title, content, done); // 여기에 작성
+
+    // 11번
+    // const moneyList = [2000000, 240000, 3000000, 1500];
+
+    // const moneyList2 = moneyList.map(num => num * 0.1);
+    // console.log(moneyList2);
+
+    // 12번
+    // const members = [
+    //   { id: 'a1', name: 'Goni', age: 36 },
+    //   { id: 'a2', name: 'Pony', age: 32 },
+    //   { id: 'a3', name: 'Tony', age: 12 },
+    //   { id: 'a4', name: 'Moly', age: 24 },
+    //   { id: 'a5', name: 'Noni', age: 45 }
+    // ]; 
+
+    // const deleteMember = members.filter((memberId) => { return memberId.id !== 'a3'});
+    // console.log(deleteMember);
+
+    // 13번
+    // const userInfo = {
+    //   name: 'Goni Kim',
+    //   age: 30
+    // };
+
+    // const userInfo2 = {
+    //   ...userInfo,
+    //   email: 'geoblo@naver.com'
+    // }
+    // console.log(userInfo2);
+
+    // 14번
+    // const key = prompt('추가하고 싶은 속성은?');
+    // const value = prompt('추가하고 싶은 값은?');
+
+    // const myInfo = {
+    //   name: 'Goni Kim',
+    //   age: 30
+    // };    
+    
+    // myInfo.key = value;
+    // console.log(myInfo);
+
+
+    // 15번
+    // const a1 = ['Kim', 'Lee', 'Park'];
+    // const a2 = 'Choi';
+    // a1.push(a2);
+    // const a3 = [...a1];
+    // console.log(a3);
+
+    const a = prompt('글자를 줄여드릴게요');
+    const myArray = a.split('');
+    console.log(myArray);
+
+
+  </script>
+
+
+</head>
+<body>
+  
+</body>
+</html>
