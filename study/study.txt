@@ -1,0 +1,9 @@
+10월 13일
+앞으로 남은 범위
+callback함수
+콜백지옥(callback hell)
+promise async/await
+Set, Map
+optional chaining
+try catch 에러 핸들링
+다 끝나면 React 배움
