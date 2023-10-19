@@ -1,6 +1,7 @@
 function Profile(props) { // function Profile(viewCount, name, introduction) { // 구조 분해 할당 방법1
-  console.log(props);
+  console.log(props); // props는 객체이다.
   // const { viewCount, name, introduction } = props; // 구조 분해 할당 방법2
+  // props.name = '캉캉' // props는 읽기 전용이다.(변경 불가)
 
   return (
     <>

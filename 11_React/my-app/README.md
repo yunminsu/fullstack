@@ -10,11 +10,11 @@
   (중요) git에 올라가야 됨!!{버전 관리} 그래야 팀원들도 같은 버전이 설치됨
 
 - index.html:
-  콘텐츠가 랜더링 될 단 하나의 템플릿 페이지
+  콘텐츠가 렌더링 될 단 하나의 템플릿 페이지
   Root DOM Node를 갖고 있음
 
 - index.js:
-  Root DOM Node에 App 컴포넌트를 랜더링
+  Root DOM Node에 App 컴포넌트를 렌더링
 
 - App.js:
   실제 보여질 컴포넌트

@@ -2,7 +2,7 @@
 import Avatar from "./Avatar";
 import UserInfo from "./UserInfo";
 
-// 실제 랜더링은 안하고 단순 연습용 예제
+// 실제 렌더링은 안하고 단순 연습용 예제
 function CommentEx(props) {
   return (
     <>

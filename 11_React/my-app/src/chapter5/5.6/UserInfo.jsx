@@ -1,7 +1,6 @@
 import Avatar from "./Avatar";
 
 function UserInfo(props) {
-  console.log(props);
   return (
     <div className="user-info">
     {/* 1) 아바타 이미지를 컴포넌트로 추출 

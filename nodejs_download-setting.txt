@@ -1,0 +1,22 @@
+Node.js 설치
+(서버개발용 모듈도 같이 설치됨)
+1. 구글 Node.js 검색
+2. 18.18.2 LTS 다운로드
+3. Automatically 체크 후 설치
+
+React 세팅 및 실행
+1. npm install -g npm@10.2.0 // npm 버전을 10.2.0으로 인스톨
+2. 프로젝트를 만들 폴더로 접근(터미널에서 cd 폴더), npx create-react-app 폴더명으로 프로젝트 생성
+3. src/index.js <React.StrictMode></React.StrictMode> 제거 // 제거 안하면 로그 2번씩 출력
+4. jsx 파일 생성 후 코딩(export 해줘야 함) -> index.js(import해서 받아야함) 에서 불러오기
+4. 앱 실행 
+  - cd 폴더명 접근 후 npm start로 앱 실행
+
+필기
+- Node.js에서는 pakage = 라이브러리
+- 프레임워크(툴이 정해져 있어서 따름)와 라이브러리(기능적 함수와 메소드를 불러와서 사용) 차이 => 주최가 누구냐
+
+JSX(자바스크립트의 확장 문법)
+- 최종적으로는 JS코드로 Recat가 변환시킴
+- JS코드를 쓰고 싶으면 중괄호( {JS코드} )를 사용 
+- 자동 완성해야 import가 자동으로 생성

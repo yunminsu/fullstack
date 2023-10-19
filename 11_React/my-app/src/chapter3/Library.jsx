@@ -10,6 +10,6 @@ function Library(props) {
       <Book name={"리액트를 다루는 기술"} numOfPage={500} /> 
     </div>
   );
-} // Library 컴포넌트는 총 3개의 Book 컴포넌트를 랜더링
+} // Library 컴포넌트는 총 3개의 Book 컴포넌트를 렌더링
 
 export default Library; // Library 컴포넌트 내보내기

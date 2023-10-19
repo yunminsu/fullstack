@@ -28,8 +28,16 @@ ex) box-orient
 * React 개발 질문
 - stack overflow 
 
+8.
+* npm 명령어 보는법
+- https://www.npmjs.com/
+- Documentation -> npm CLI
 
-
+9.
+* React Developer Tools 사용
+- 구글 웹스토어에서 React Developer Tools 검색 후 설치
+- 웹 페이지 다시 실행하면 적용됨
+- 개발자도구에서 Components 탭 => 만든 컴포넌트 확인 가능, Profiler => 속도 확인 가능
 
 
 
