@@ -40,7 +40,7 @@ function MainPage() {
   
   const handleToggle = () => {
     // setShowWarring(!showWarring);
-    setShowWarring(prevState => !prevState); // 
+    setShowWarring(prevState => !prevState); // {함수형 사용, prevState(showWarring = false) 값을 !prevState(showWarring = true)로 변경 }
   }
 
   return (

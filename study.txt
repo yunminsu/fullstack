@@ -15,8 +15,6 @@ try catch 에러 핸들링
 
 React
 10월 19일
-
-
 - 리액트의 이벤트는 소문자 onclick이 아니라 카멜케이스 onClick을 사용해야함
 - 함수 호출 시 함수명() <- ()를 넣으면 바로 실행됨, ()를 없애야 클릭시 실행됨 
 ex)
@@ -27,3 +25,8 @@ onClick={handleDelete} 클릭 시 실행
 
 - 조건부 렌더링 3가지(if, &&, 삼항연산자) 
 1. JSX 내에서는 if문 사용 불가하므로 삼항연산자(더 많이 사용)를 사용하거나 JS에서 사용해야 함
+
+
+10월 20일
+- package-lock.json, package.json 파일 2개만 있으면 npm install을 통해서 node_modules를 다운 가능(라이브러리가 추가될때 사용)
+  git에 node_modules를 다 올리게 되면 파일이 방대해지기 때문
