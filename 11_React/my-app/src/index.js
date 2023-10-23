@@ -32,6 +32,7 @@ import FileInput from './chapter11/11.3/FileInput';
 import Reservation from './chapter11/11.4/Reservation';
 import SingUp from './chapter11/SignUp';
 import SingUpState from './chapter11/SignUpState';
+import ReservationRefactoring from './chapter11/11.4/ReservationRefactoring';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -99,8 +100,9 @@ root.render(
     // <FlavorForm />
     // <FileInput />
     // <Reservation />
-    // <SingUp />
-    <SingUpState />
+    <SingUp />
+    // <SingUpState />
+    // <ReservationRefactoring />
   );
 
 // If you want to start measuring performance in your app, pass a function

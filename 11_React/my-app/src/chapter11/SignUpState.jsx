@@ -19,12 +19,12 @@ import { useState } from "react";
 // 1) form 태그 및 submit 이벤트를 사용해도 되고 button 태그의 click 이벤트를 사용해도 됨
 // 2) 각각의 state를 여러 개 만들어도 되고 객체 형태로 한번에 관리해도 됨
 
-function SingUp() {
+function SingUpState() {
   const [value, setValue] = useState({
     name: '',
     gender: 'man'
   });
-  
+
 
   const handleChangeName = (e) => {
     setValue({
@@ -42,6 +42,7 @@ function SingUp() {
     e.preventDefault();
     alert(`이름: ${value.name}, 성별: ${value.gender}`)
   }
+
 
   return (
    <form onSubmit={handleSubmit}>
@@ -63,7 +64,7 @@ function SingUp() {
         <option value="woman">여자</option>
       </select>
     </label>
-    
+
     <br />
 
     <button type="submit">회원 가입</button>
@@ -71,4 +72,4 @@ function SingUp() {
   );
 }
 
-export default SingUp;
+export default SingUpState;
