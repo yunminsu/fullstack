@@ -40,6 +40,18 @@ ex) box-orient
 - 개발자도구에서 Components 탭 => 만든 컴포넌트 확인 가능, Profiler => 속도 확인 가능
 
 
+Extention
+(React)
+1.
+* vscode-styled-components
+- styled-components를 CSS화 시키기
+
+2.
+* Reactjs code snippets
+- 자동완성 (rsf 등)
+
+
+
 
 
 

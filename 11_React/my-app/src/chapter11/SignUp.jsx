@@ -89,7 +89,6 @@ function SingUp() {
       ...prevValue,
       [name]: value
     }));
-
   };
 
   const handleSubmit = (e) => {

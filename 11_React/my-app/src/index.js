@@ -33,6 +33,16 @@ import Reservation from './chapter11/11.4/Reservation';
 import SingUp from './chapter11/SignUp';
 import SingUpState from './chapter11/SignUpState';
 import ReservationRefactoring from './chapter11/11.4/ReservationRefactoring';
+import UintCalculator from './chapter12/UintCalculator';
+import WelcomeDialog from './chapter13/13.1.1.1/WelcomeDialog';
+import SplitPaneSection from './chapter13/13.1.1.2/SplitPaneSection';
+import Dialog from './chapter13/13.1.2/Dialog';
+import DialogContainer from './chapter13/13.1.2/DialogContainer';
+import SignUpDialog from './chapter13/13.1.3/SignUpDialog';
+import ProfileCard from './chapter13/ProfileCard';
+import StyledPage from './chapter15/StyledPage';
+import Blocks from './chapter15/theme/Blocks';
+import ThemeApp from './chapter15/theme/ThemeApp';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -100,9 +110,24 @@ root.render(
     // <FlavorForm />
     // <FileInput />
     // <Reservation />
-    <SingUp />
+    // <SingUp />
     // <SingUpState />
     // <ReservationRefactoring />
+
+    // 12장 예제
+    // <UintCalculator />
+
+    // 13장 예제
+    // <WelcomeDialog />
+    // <SplitPaneSection />
+    // <DialogContainer />
+    // <SignUpDialog />
+    // <ProfileCard />
+
+    // 15장 예제
+    // <StyledPage />
+    // <Blocks />
+    <ThemeApp />
   );
 
 // If you want to start measuring performance in your app, pass a function
