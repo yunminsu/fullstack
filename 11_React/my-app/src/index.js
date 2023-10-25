@@ -43,6 +43,8 @@ import ProfileCard from './chapter13/ProfileCard';
 import StyledPage from './chapter15/StyledPage';
 import Blocks from './chapter15/theme/Blocks';
 import ThemeApp from './chapter15/theme/ThemeApp';
+import ComponentVriable from './chapter7/7.6/ComponentVriable';
+import SimpleRouter from './chapter16/SimpleRouter';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -85,6 +87,7 @@ root.render(
     // <Counter />
     // <SetStateMerge />
     // <TextInputWithFocusButton />
+    // <ComponentVriable />
 
     // 8장 예제
     // <Toggle />
@@ -127,7 +130,10 @@ root.render(
     // 15장 예제
     // <StyledPage />
     // <Blocks />
-    <ThemeApp />
+    // <ThemeApp />
+
+    // 16장 예제
+    <SimpleRouter />
   );
 
 // If you want to start measuring performance in your app, pass a function

@@ -22,7 +22,7 @@ const TodoTemplateWarpper = styled.div`
   }
 
   .content {
-
+    background: white;
   }
 `;
 
@@ -45,7 +45,7 @@ function TodoTemplate(props) {
     <TodoTemplateWarpper>
       {/* <AppTitle>일정 관리</AppTitle> */}
       <div className='app-title'>일정 관리</div>
-      <div>{children}</div>
+      <div className='content'>{children}</div>
     </TodoTemplateWarpper>
   );
 }
