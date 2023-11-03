@@ -12,6 +12,7 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "./pages/Layout";
 import Main from "./pages/Main";
 import ProductDetail from "./pages/ProductDetail";
+import Cart from "./pages/Cart";
 
 const GlobalStyle = createGlobalStyle`
   /* 글로벌(공통) 스타일 */
@@ -30,7 +31,15 @@ const GlobalStyle = createGlobalStyle`
   .cusor-pointer {
     cursor: pointer;
   }
+
+  /* 넘치는 텍스트에 줄임표(... 만들기) */
+  .text-ellipsis {
+    white-space: nowrap; // 줄바꿈 안함
+    overflow: hidden; // 넘친 부분 숨기기
+    text-overflow: ellipsis; // 넘친 부분을 어떻게 보일지 지정
+  }
 `;
+
 
 // { 컴포넌트에 커스텀(CSS) 하기 } - 안됨
 // const StyledButton = styled(Button)`
@@ -56,8 +65,8 @@ function App() {
           {/* Quiz: 상품별 상세페이지 여러 개를 라우팅하려면? URL 파라미터 사용 
             예: /detail/1로 접속하면 productId에 1이 당기도록 설정 */}
           <Route path="detail/:productId" element={<ProductDetail />} />
-
-          {/* <Route path="cart" element={undefined} /> */}
+          <Route path="cart" element={<Cart />} />
+          <Route path="*" element={<div>페이지가 존재하지 않습니다.</div>} />
         </Route>
       </Routes>
 

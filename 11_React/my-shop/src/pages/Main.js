@@ -10,6 +10,7 @@ import { addMoreProduct, getAllProducts, getMoreProductsAsync, selectProductList
 import ProductListItem from '../components/ProductListItem';
 import { getMoreProducts } from '../api/productAPI';
 import { ClimbingBoxLoader } from "react-spinners";
+import LatestView from '../components/LatestView';
 
 const MainBackgrund = styled.div`
   height: 500px;
@@ -112,6 +113,9 @@ const status = useSelector(selectSatus); // API 요청 상태(로딩 상태)
           더보기 {status} 
         </Button>    
       </section>
+
+      {/* 최근 본 상품 컴포넌트 */}
+      <LatestView />
     </>
   );
 }

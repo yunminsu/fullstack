@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Button, Col, Container, Form, Nav, Row } from 'react-bootstrap';
+import { Alert, Button, Col, Container, Form, Modal, Nav, Row } from 'react-bootstrap';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { clearSeletedProduct, getSelectedProduct, selectSelectedProduct } from '../features/product/productSlice';
 import axios from 'axios';
 import styled, { keyframes } from 'styled-components';
 import { ToastContainer, toast } from 'react-toastify';
 import TabContents from '../components/TabContents';
+import { addItemToCart, selectCartCount } from '../features/cart/cartSlice';
 
 // 스타일드 컴포넌트를 이용한 애니메이션 속성 적용
 const highlight = keyframes`
@@ -25,15 +26,20 @@ function ProductDetail(props) {
   const { productId } = useParams();
   const dispatch = useDispatch();
   const product = useSelector(selectSelectedProduct);
-
+  
   // 숫자 포맷 적용
   const formatter = new Intl.NumberFormat('ko-KR', { style: 'currency', currency:'KRW'})
 
   // { alert 창 사라지게 하는 state }
   const [timer, setTimer] = useState(true);
+
   const [orderCount, setOrderCount] = useState(1);
   const [showTabIndex, setShowTabIndex] = useState(0); // 탭 상태
   const [showTab, setShowTab] = useState('detail');
+  const [showModal, setShowModal] = useState(false); // 모달 상태
+  const handleCloseModal = () => setShowModal(false);
+  const handleOpenModal = () => setShowModal(true);
+  const navigate = useNavigate();
 
   // 처음 마운트 됐을 때 서버에 상품 id를 이용하여 데이터를 요청하고
   // 그 결과를 리덕스 스토어에 저장 
@@ -55,6 +61,19 @@ function ProductDetail(props) {
       dispatch(clearSeletedProduct());
     };
   }, []);
+
+  // 상품 상세페이지에 들어갔을 때 해당 상품이 존재할때만 id값을 localStorage에 추가
+  useEffect(() => {
+    if (!product) return;
+    
+    let latestViewed = JSON.parse(localStorage.getItem('latestViewed')) || []; // 처음에 null이니까 기본값으로 빈배열 넣어줌
+    // id값을 넣기 전에 기존 배열에 존재하는지 검사하거나
+    // 아니면 일단 넣고 Set 자료형을 이용하여 중복 제거(간편함)
+    latestViewed.push(product.id);
+    latestViewed = new Set(latestViewed); // 배열을 Set 객체로 만듦(중복 요소가 제거됨)
+    latestViewed = [...latestViewed]; // Set 객체를 다시 배열로 변환
+    localStorage.setItem('latestViewed', JSON.stringify(latestViewed)); // JSON 문자열로 저장
+  }, [product])
 
   const handleChangeOrderCount = (e) => {
     // 숫자 외 입력 시 유효성 검사
@@ -104,8 +123,22 @@ function ProductDetail(props) {
         </Col>
 
           <Button variant='primary'>주문하기</Button>
+          {/* onClick에 함수 두개 쓰기 */}
+          <Button variant='warning' onClick={() => {dispatch(addItemToCart(
+            {
+            id: product.id,
+            title: product.title,
+            price: product.price,
+            count: orderCount
+            }));
+            
+            handleOpenModal();
+            }}>장바구니</Button>
         </Col>
+
       </Row>
+
+      
 
       {/* 탭 버튼 UI 만들기 */}
       <Nav variant="tabs" defaultActiveKey="link-0" className='my-3'>
@@ -166,6 +199,25 @@ function ProductDetail(props) {
         // }.showTab => { 틀린 이유: 객체 안에서 showTab이라는 속성을 찾아라 } 
         }[showTab]
       }
+
+      {/* 장바구니에 담기 모달 만들기 추후 공통 모달로 만드는 것이 좋음 */}
+      <Modal show={showModal} onHide={handleCloseModal}>
+        <Modal.Header closeButton>
+          <Modal.Title>알림</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          장바구니에 상품을 담았습니다. <br />
+          장바구니로 이동하시겠습니까?
+        </Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleCloseModal}>
+            취소
+          </Button>
+          <Button variant="primary" onClick={() => navigate('/cart')} >
+            확인
+          </Button>
+        </Modal.Footer>
+      </Modal>
 
     </Container>
   );
