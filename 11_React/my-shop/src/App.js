@@ -40,12 +40,6 @@ const GlobalStyle = createGlobalStyle`
   }
 `;
 
-
-// { 컴포넌트에 커스텀(CSS) 하기 } - 안됨
-// const StyledButton = styled(Button)`
-// `;
-
-
 function App() {
   return (
     <>
