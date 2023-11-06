@@ -30,3 +30,6 @@ onClick={handleDelete} 클릭 시 실행
 10월 20일
 - package-lock.json, package.json 파일 2개만 있으면 npm install을 통해서 node_modules를 다운 가능(라이브러리가 추가될때 사용)
   git에 node_modules를 다 올리게 되면 파일이 방대해지기 때문
+
+
+onClick 같은 속성 값은 함수로 전달하는 것을 권장

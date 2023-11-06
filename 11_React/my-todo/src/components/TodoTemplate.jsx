@@ -40,6 +40,7 @@ const TodoTemplateWarpper = styled.div`
 // children으로 내부 자식 엘리먼트들을 props로 받아와서 랜더링
 function TodoTemplate(props) {
   const { children } = props;
+  console.log(children);
 
   return (
     <TodoTemplateWarpper>
