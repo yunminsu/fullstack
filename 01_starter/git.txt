@@ -79,3 +79,11 @@ branch: 독립적인 작업을 위한 프로젝트의 가지
   - hotfix: 배포(출시) 버전에서 버그가 생겼을 때 긴급 수정하는 브랜치
 
   ## git 브랜치 연습
+  1. 작업 전 브랜치를 가장 최신으로 (pull)
+  - 그래야 충돌을 최소화 할 수 있음(습관화하기)
+  2. 기능 브랜치 만들기 (git branch) // git branch feature/login
+  { // git branch로 브랜치 확인 }
+  3. 브랜치 이동 (git checkout) // git checkout feature/login
+  4. 작업 하기 -> 커밋 만들기 -> 푸쉬하기
+
+
