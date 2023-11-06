@@ -99,7 +99,7 @@ root.render(
     // <LoginControl />
     // <LoginControlRefactoring />
     // <Mailbox unreadMessages={messages}/>
-    // <MainPage />
+    <MainPage />
     // <LandingPage />
 
     // 10장 예제
@@ -133,7 +133,7 @@ root.render(
     // <ThemeApp />
 
     // 16장 예제
-    <SimpleRouter />
+    // <SimpleRouter />
   );
 
 // If you want to start measuring performance in your app, pass a function
