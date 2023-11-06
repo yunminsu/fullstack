@@ -1,0 +1,29 @@
+Redux(전역 상태 관리) - 여러 컴포넌트에서 사용 할 때
+
+1. store.js 생성
+
+2. index.js 에서 store 제공
+
+  <Provider store={store}>
+    <App /> - store에 저장된 state들을 꺼내 쓸 수 있음
+  <Provider />
+
+3. Slice.js 생성
+
+  const 변수 = {
+    객체들...
+  }
+
+  const 변수명 = createSlice({
+  보일러플레이트(reducers...)
+  )}
+
+  export {reducers} = Slice.actions;
+  export const 변수명 = 선택자
+  export default Slice.reducer;
+
+4. 
+
+
+
+

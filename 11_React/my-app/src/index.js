@@ -1,5 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+// 18장 예제
+// 2. 리액트에 Redux Store 제공하기
+import { Provider  } from 'react-redux';
+
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
@@ -45,6 +49,15 @@ import Blocks from './chapter15/theme/Blocks';
 import ThemeApp from './chapter15/theme/ThemeApp';
 import ComponentVriable from './chapter7/7.6/ComponentVriable';
 import SimpleRouter from './chapter16/SimpleRouter';
+import AboutPage from './chapter16/pages/AboutPage';
+import CounterEffect from './chapter7/7.3/ex1/CounterEffect';
+import EffectSummary from './chapter7/7.3/ex2/EffectSummary';
+import EffectContainer from './chapter7/7.3/ex2/EffectContainer';
+import Timer from './chapter7/7.3/ex3/Timer';
+import TimerContainer from './chapter7/7.3/ex3/TimerContainer';
+import ApiRequest from './chapter17/ApiRequest';
+import ReduxtestApp from './chapter18/ReduxtestApp';
+import { store } from './chapter18/app/store';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -88,6 +101,10 @@ root.render(
     // <SetStateMerge />
     // <TextInputWithFocusButton />
     // <ComponentVriable />
+    // <CounterEffect />
+    // <EffectSummary />
+    // <EffectContainer />
+    // <TimerContainer />
 
     // 8장 예제
     // <Toggle />
@@ -99,7 +116,7 @@ root.render(
     // <LoginControl />
     // <LoginControlRefactoring />
     // <Mailbox unreadMessages={messages}/>
-    <MainPage />
+    // <MainPage />
     // <LandingPage />
 
     // 10장 예제
@@ -134,6 +151,18 @@ root.render(
 
     // 16장 예제
     // <SimpleRouter />
+
+    // 17장 예제
+    // <ApiRequest />
+
+    // 18장 예제
+    // 2. 리액트에 Redux Store 제공하기
+    // ReduxTestApp 컴포넌트와 그 하위 자식들은 Redux Store에 접근 가능
+    // Redux Store에 저장된 state들을 마음대로 꺼내 쓸 수 있음
+    <Provider store={store}>
+      <ReduxtestApp />
+    </Provider>
+
   );
 
 // If you want to start measuring performance in your app, pass a function

@@ -23,6 +23,10 @@ ex) box-orient
 6.
 * 배포
 - netlify
+- 로그인 후 add new site -> import an existing project -> github -> 배포할 프로젝트 선택 -> 배포할 프로젝트 npm run build 실행 
+  -> build 파일이 생성됨(우리가 작업한 코드들이 압축되어 있음)
+  -> Build command에서 CI=false npm run build로 수정 -> delploying -> site configuration -> Change site name 사이트 이름 변경
+  -> _redirects 생성 후 /* /index.html 200 작성 (수동으로 입력해서 페이지 접근 시 index로 보냄)
 
 7.
 * React 개발 질문
@@ -39,6 +43,10 @@ ex) box-orient
 - 웹 페이지 다시 실행하면 적용됨
 - 개발자도구에서 Components 탭 => 만든 컴포넌트 확인 가능, Profiler => 속도 확인 가능
 
+10.
+* 포맷(숫자,날짜 등) 적용 참고
+- https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
+
 
 Extention
 (React)
@@ -50,12 +58,56 @@ Extention
 * Reactjs code snippets
 - 자동완성 (rsf 등)
 
+3.
+* Simple React snippets
+- 자동완성
 
 
+Library
+* uuid
+- npm i uudi
+- HTML 웹 스토리지
 
+* toastify
+- 경고창
+- npm install --save react-toastify
 
-
-
+* react-spinners
+- 로딩창
+- https://www.npmjs.com/package/react-spinners -> Demo -> Storybook
 
 tip
+프래그먼트: <></>
+
+
+리액트 깃허브 연동 방법
+1. vs code 새창 열고 터미널에서 저장할 폴더 접근후 npx create-react-app 프로젝트명 으로 프로젝트 생성
+2. CRA로 설치 시 git init은 자동으로 생성 됨
+3. git remote add origin 깃허브URL 로 깃허브와 연동
+4. git push -u origin main 으로 푸쉬
+
+깃생성 했을때 뜨는 코드
+
+echo "# todo-app" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main
+git remote add origin https://github.com/yunminsu/todo-app.git
+git push -u origin main
+
+-------------------------------------------------------------
+
+…or push an existing repository from the command line
+git remote add origin https://github.com/yunminsu/todo-app.git
+git branch -M main
+git push -u origin main
+
+
 1. React가 빠른이유 Virtual DOM(가상 돔)사용
+
+2. 터미널에서 tap 누르면 자동완성
+- ex) cd 11 타이핑 후 tap 누르면 관련된 11_React 자동 완성
+
+3. key값은 내부적으로 구분하기 위해 사용되는 내장 속성? 같은 개념
+
