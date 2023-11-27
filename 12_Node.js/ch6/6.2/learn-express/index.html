@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>익스프레스 서버</title>
+</head>
+<body>
+  <h1>익스프레스</h1>
+  <p>배워봅시다.</p>
+
+  <!-- 동기식처리 -->
+  <form id="form" action="/user" method="post" >
+    <input type="text" name="username" placeholder="ID를 입력하세요">
+    <button type="submit">로그인</button>
+  </form>
+
+  <!-- axios 라이브러리 가져오기 -->
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script> 
+
+  <!-- 비동기처리 -->
+  <script>
+    document.querySelector('#form').addEventListener('submit', async (e) => {
+      e.preventDefault(); // submit 이벤트 기본 동작: 폼 데이터를 서버로 전송하고 새로 고침
+      const username = e.target.username.value; // { React 일때는 state로 관리를 하니 state값을 보내주면 됨 }
+      try {
+        const result = await axios.post('/user', { username });
+        console.log(result);
+      } catch (err) {
+        console.error(err);
+      }
+      e.target.username.value = '';
+    })
+  </script>
+</body>
+</html>
