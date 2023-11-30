@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MsBoard</title>
+
+  <!-- /css/main.css 로 GET 요청을 보내는 것임 -->
+  <!-- app.js 에서 app.use(express.static(path.join(__dirname, 'public')))로 인해 절대경로/public/css/main.css를 찾아주는 것 -->
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+  <%- include('nav') %>
+
+  <main>
+    <h3>📋 MsBoard 서비스 오픈</h3>
+    <p>일상을 기록하세요.</p>
+  </main>
+</body>
+</html>

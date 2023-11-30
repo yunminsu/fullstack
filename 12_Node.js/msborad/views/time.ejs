@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  <!-- 서버의 시간 -->
+  <p>현재 서버 시간: <%= date %></></p>
+  <p>현재 서버 시간(밀리초): <%= datetime %></></p>
+
+  <!-- 아래 ejs 코드도 서버에서 실행됨{(위 코드는 /routes/index.js 에서 먼저 실행되기 때문에 밀리초차이가 나기는 함)} -->
+  <p>현재 클라이언트 시간: <%= new Date() %></></p>
+  <p>현재 클라이언트 시간(밀리초): <%= Date.now() %></></p>
+  <!-- { 백엔드 / 프론트엔드 코드 구분 잘하기! } -->
+  <!-- { ejs코드는 주석 처리해도 화면에서 안 보일뿐 실행됨, 잘못된 코드 주석처리해도 에러!! }-->
+</body>
+</html>
