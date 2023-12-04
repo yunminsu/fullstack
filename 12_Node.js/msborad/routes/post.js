@@ -8,28 +8,28 @@ const router = express.Router();
 
 // 글 목록 기능 만들기
 // GET /post 라우터
-router.get('/', async (req, res) => { // { db 호출은 비동기 이므로 async/await 사용 }
-  const posts = await db.collection('post').find({}).toArray(); // 컬렉션의 모든 document를 출력하는 법 
-  console.log(posts);
+// router.get('/', async (req, res) => { // { db 호출은 비동기 이므로 async/await 사용 }
+//   const posts = await db.collection('post').find({}).toArray(); // 컬렉션의 모든 document를 출력하는 법 
+//   console.log(posts);
 
-  // 글 목록 페이지 만들어서 웹페이지에 서버(DB) 데이터 꽂아 넣기 => 템플릿 엔진 사용
-  // res.render('list');
+//   // 글 목록 페이지 만들어서 웹페이지에 서버(DB) 데이터 꽂아 넣기 => 템플릿 엔진 사용
+//   // res.render('list');
   
-  // 서버 데이터를 ejs 파일에 넣으려면
-  // 1) ejs 파일로 데이터 전달
-  // 2) ejs 파일 안에서 <%= 데이터 %>
-  // 3) ejs 문법으로 HTML 안에서도 JS 사용하려면 <% 자바스크립트 코드 %>
-  res.render('list', { posts }); // { 두번째 인자로 넘길값 객체로 넘기기}
-});
+//   // 서버 데이터를 ejs 파일에 넣으려면
+//   // 1) ejs 파일로 데이터 전달
+//   // 2) ejs 파일 안에서 <%= 데이터 %>
+//   // 3) ejs 문법으로 HTML 안에서도 JS 사용하려면 <% 자바스크립트 코드 %>
+//   res.render('list', { posts }); // { 두번째 인자로 넘길값 객체로 넘기기}
+// });
 
-// 글 작성 기능 만들기
-// 사용자가 작성한 글을 DB에 저장해주기
-// 1) 글 작성 페이지에서 작성한 내용을 서버로 전송
-// 2) 서버는 전달받은 내용을 검사(유효성 검사)
-// 프론트와 더불어 이중 체크 해주면 좋음
-// => 프론트엔드 코드 및 데이터는 위조가 가능하기 때문
-// => 또는 POSTMAN 같은 툴을 써서 요청을 보내면 프론트의 유효성 검사를 안거침
-// 3) 이상이 없으면 DB에 저장
+// // 글 작성 기능 만들기
+// // 사용자가 작성한 글을 DB에 저장해주기
+// // 1) 글 작성 페이지에서 작성한 내용을 서버로 전송
+// // 2) 서버는 전달받은 내용을 검사(유효성 검사)
+// // 프론트와 더불어 이중 체크 해주면 좋음
+// // => 프론트엔드 코드 및 데이터는 위조가 가능하기 때문
+// // => 또는 POSTMAN 같은 툴을 써서 요청을 보내면 프론트의 유효성 검사를 안거침
+// // 3) 이상이 없으면 DB에 저장
 
 // GET /post/write 라우터
 router.get('/write', (req, res) => {
@@ -108,8 +108,6 @@ router.get('/:id', async (req, res, next) => {
       })
     }
 
-    
-  
     // Quiz: 데이터 꽂아서 보내고 바인딩하기
     res.render('detail', { post });
   } catch (err) { // 1) 번에 대한 예외 처리
@@ -223,5 +221,46 @@ router.delete('/:id', async (req, res) => {
 // 2) Ajax 방식
 // 3) 라우트 매개변수(URL 파라미터)
 // 4) 쿼리스트링
+
+// 글 목록 여러 페이지로 나누기(페이지네이션, pagination)
+// 예를 들어 글 1000개를 전부 가져와서 보여주도록 하면 DB도 부담되고 브라우저도 부담이 됨
+// 1) 페이지 이동 버튼 만들기
+// 2) 페이지마다 5개의 글을 보여줌(즉, 1페이지는 1~5번글, 2페이지는 6~10번글)
+
+// GET /post 라우터 재작성
+router.get('/', async (req, res) => {
+  // 테스트
+  // limit(5): 위에서 5개만 가져옴
+  // skip(5): 5개를 건너뜀
+  // const posts = await db.collection('post').find(({})).skip(5).limit(5).toArray();
+
+  // 페이지네이션 구현(1)
+  // 페이지 번호는 쿼리 스트링 또는 URL 파라미터 사용
+  // 1 -> 0, 2 -> 5, 3 -> 10
+  // const posts = await db.collection('post').find(({})).skip((req.query.page - 1) * 5).limit(5).toArray();
+
+  // 페이지 계산
+  // 1~5 -> 6~10
+  const totalCount = await db.collection('post').countDocuments({}); // 전체 document 개수
+  const postsPerPage = 5; // 페이지 당 콘텐츠 개수 { 5는 하드코딩 => 프론트에서 지정하면 그 값을 쓰면 됨 }
+  const numOfPage = Math.ceil(totalCount/postsPerPage); // 페이지 수
+  const currentPage = req.query.page || 1; // 현재 페이지
+
+  // 페이지네이션 구현(2)
+  // 근데 데이터의 양이 너무 많아 skip(1000000)을 많이 하게 되면 성능에 안좋음
+  // => 너무 많이 skip 하지 못하게 막거나 다른 페이지네이션을 방법 구현
+  // 장점: 매우 빠름(_id 기준으로 뭔가 찾는건 DB가 가장 빠르게 하는 작업임)
+  // 단점: 바로 다음 게시물만 가져올 수 있어서 1페이지 보다가 3페이지로 이동 불가
+  let posts;
+  if (req.query.nextId) {
+    posts = await db.collection('post').find({ _id: { $gt: new ObjectId(req.query.nextId) } }).limit(5).toArray(); // ObjectId로 대소 비교 가능
+  } else {
+    posts = await db.collection('post').find().limit(5).toArray(); // 처음 5개
+  }
+
+
+
+  res.render('list', { posts, numOfPage, currentPage });
+});
 
 module.exports = router;

@@ -63,9 +63,24 @@
       </div>  
     <% } %>
   </div>
+
+  <!-- 페이지 이동 버튼 -->
+  <div class="pagination-bg">
+    <% for (let i = 1; i <= numOfPage; i++ ) { %>
+      <!-- { ejs 에서 클래스값 추가하기(삼항연산자) } -->
+      <!-- { 페이지 수가 많아지면 또 그룹화 해서 적용 ex) 1~5 -> 1, 6~10 -> 2 .. } -->
+      <a href="/post?page=<%= i %>" class="<%= i == currentPage ? 'active' : '' %>"><%= i %></a>
+    <% } %>
+  </div>
+
+  <!-- 다음 버튼 -->
+  <div class="next-bg">
+    <a href="/post?nextId=<%= posts[posts.length - 1]?._id %>">다음</a>
+  </div>
   
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script src="/js/list.js"></script>
+
 </body>
 </html>
 
