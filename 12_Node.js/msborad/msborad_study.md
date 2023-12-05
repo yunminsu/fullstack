@@ -1,5 +1,18 @@
-# 로그인 구현 순서
+# 로그인 흐름
+1. 로그인 페이지 접속
+2. ID와 PW를 입력하면 value값을 서버에 POST 요청
+  - 기본값: enctype="application/x-www-form-urlencoded"
+3. body-parser가 req.body에 input태그 name속성의 값으로 value값을 담음
+4. POST로 받으면 authenticate(/routes/user.js)부터 실행됨(로그인 전략, /passport/localStrategy.js), DB에 일치하는 값을 찾음
+  - 입력한 PW를 해싱하여 DB의 비번과 일치하는지 비교
+5. 값이 일치하면 authenticate의 콜백 함수 실행
+6. index.js(/passport)의 serializeUser가 실행되어 authenticate의 req.login에서 호출됨
+  - 쿠키 및 세션을 생성하여 자동으로 보내줌
+7. app.js의 passport 미들웨어가 실행됨 app.use(passport.session())은 deserializeUser(/routes/user.js)를 실행함
+  - id 값을 통해 세션값이 일치 하는지 확인함
 
+
+# 로그인 구현 순서
 1. 패스포트 라이브러리 설치
 
 2. /app.js에서 패스포트 require/index.js 가져오기, 패스포트 설정/미들웨어 실행
