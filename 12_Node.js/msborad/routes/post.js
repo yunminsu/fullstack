@@ -135,8 +135,8 @@ router.post('/write', isLoggedIn, upload.single('img'), async (req, res, next) =
 // 2) { _id: 글id } 조건으로 글을 DB에서 찾아서
 // 3) 해당 글을 ejs 파일에 꽂아서 보내줌 
 
-// Get /post/:id 라우터
-router.get('/:id', async (req, res, next) => {
+// Get /post/detail/:id 라우터
+router.get('/detail/:id', async (req, res, next) => {
   // res.render('detail');
 
   // DB에서 글 가져오기
@@ -315,9 +315,168 @@ router.get('/', async (req, res) => {
     posts = await db.collection('post').find().limit(5).toArray(); // 처음 5개
   }
 
-
-
   res.render('list', { posts, numOfPage, currentPage });
 });
 
+// 검색 기능 만들기
+// 1) 검색 UI(input과 버튼)에서 서버로 검색어 전송
+// 2) 서버는 그 검색어가 포함된 document를 찾음
+// 3) 그 결과를 ejs에 넣어서 보내줌{(SSR)} { React에서는 state에 값을 담아 서버로 전송/조회하여 받은 데이터를 화면에(SET함수 써서) 뿌려줌(CSR) }
+
+// GET /post/search 라우터
+router.get('/search', async (req, res) => {
+  console.log(req.query.keyword);
+
+  const { keyword } = req.query;
+
+  // 1. 서버는 그 검색어와 정확히 일치하는 document를 찾음
+  // const posts = await db.collection('post').find({ title: keyword }).toArray();
+
+  // 2. 검색어가 포함된 document를 찾으려면 => 정규표현식(정규식) 사용
+  // const posts = await db.collection('post')
+  //   .find({ title: { $regex: keyword } }).toArray();
+  // 문제점: document가 매우 많을 경우 find()를 써서 _id 아닌 다른 기준으로 document를 찾는건 느려터짐
+  // 예: document가 1억개 있으면 1억개를 다 뒤져봄
+  // 해결책: 데이터베이스에 index를 만들어두면 됨
+
+  // 3. index를 사용한 검색
+  // $text: text index를 갖다 쓰겠다는 의미
+  // $search: 검색 키워드
+  // const posts = await db.collection('post').find({ $text: { $search: keyword } }).toArray();
+
+  // (참고) find() 성능 평가
+  // explain()
+  // const result1 = await db.collection('post').find({ title: keyword }).explain('executionStats');
+  // const result2 = await db.collection('post').find({ $text: { $search: keyword } }).explain('executionStats');
+  // { result1은 DB에 담긴 모든 데이터를 조회하지만 result2는 검색된 값이 있는 데이터만 조회해서 더 빠름 }
+  // console.log(result2);
+
+  // 4. search index를 사용한 검색
+  // find({ 조건 }) -> aggregate([{ 조건1 }, { 조건2 }])
+  // 장점: 여러 상세한 조건을 배열로 넣을 수 있음 => pipeline이라고 부름
+  // const posts = await db.collection('post').aggregate([
+    // {
+      // $search: { // search index 이용 full-text search를 수행
+        // index: 'titlte_index', // 사용할 인덱스 이름
+        // text: {
+          // query: keyword, // 검색어 
+          // path: 'title' // 검색할 필드이름
+        // }
+      // }
+    // }, // 기본적으로 검색어와 관련도 점수가 높은 순으로 정렬됨
+    // aggregate에 쓸 수 있는 연산자(find에서는 메서드가 지원됨)
+    // { $sort: { _id: 1} }, // 검색 결과 정렬(1: 오름차순, -1: 내림차순)
+    // { $skip: 5 }, // 건너뛰기
+    // { $limit: 5 }, // 결과수 제한
+    // { $project: { title: 1 } } // 조회할 필드 선택(1: 추가, 0: 제외)
+  // ]).toArray();
+  // console.log(posts); // { _id, title 2개 출력 }
+
+  // Quiz: 검색 결과 페이지에 페이지네이션 만들기
+  // const postsLength = await db.collection('post').aggregate([
+  //   {
+  //     $search: { 
+  //       index: 'titlte_index', 
+  //       text: {
+  //         query: keyword,
+  //         path: 'title' 
+  //       }
+  //     }
+  //   },
+  //   { $project: { title: 1 }}
+  // ]).toArray();
+
+  // const totalCount = postsLength.length; // 전체 document 개수
+  // const postsPerPage = 5; // 페이지 당 콘텐츠 개수 { 5는 하드코딩 => 프론트에서 지정하면 그 값을 쓰면 됨 }
+  // const numOfPage = Math.ceil(totalCount/postsPerPage); // 페이지 수
+  // const currentPage = req.query.page || 1; // 현재 페이지
+
+  // const posts = await db.collection('post').aggregate([
+  //   {
+  //     $search: { 
+  //       index: 'titlte_index', 
+  //       text: {
+  //         query: keyword,
+  //         path: 'title' 
+  //       }
+  //     }
+  //   },
+  //   { $skip: (currentPage - 1) * postsPerPage},
+  //   { $limit: postsPerPage }, 
+  //   { $project: { title: 1 }}
+  // ]).toArray();
+
+  // { 강사님이 푼거 }
+  // const currentPage = req.query.page || 1; // 현재 페이지
+  // const postsPerPage = 3; // 페이지 당 콘텐츠 개수
+
+  // const query = {
+  //   $search: {
+  //     index: 'title_index',
+  //     text: {
+  //       query: keyword,
+  //       path: 'title'
+  //     }
+  //   }
+  // };
+
+  // const posts = await db.collection('post').aggregate([
+  //   query,
+  //   { $skip: (currentPage - 1) * postsPerPage },
+  //   { $limit: postsPerPage },
+  // ]).toArray();
+
+  // const result = await db.collection('post').aggregate([
+  //   query, 
+  //   { $count: "searchCount" }
+  // ]).toArray();
+  // console.log(result);
+  // const totalCount = result[0].searchCount;
+  // const numOfPage = Math.ceil(totalCount / postsPerPage); // 페이지 수
+  const lastId = req.query.nextId;
+  
+  const postsLength = await db.collection('post').aggregate([
+    {
+      $search: { 
+        index: 'titlte_index', 
+        text: {
+          query: keyword,
+          path: 'title' 
+        }
+      }
+    },
+    { $project: { title: 1 }}
+  ]).toArray();
+
+  const currentIndex = postsLength.findIndex(item => item._id == lastId);
+  const nextIndex = currentIndex + 1;
+
+  const totalCount = postsLength.length; // 전체 document 개수
+  const postsPerPage = 5; // 페이지 당 콘텐츠 개수 { 5는 하드코딩 => 프론트에서 지정하면 그 값을 쓰면 됨 }
+  const numOfPage = Math.ceil(totalCount/postsPerPage); // 페이지 수
+  const currentPage = req.query.page || 1; // 현재 페이지
+
+  if (lastId)
+  const posts = await db.collection('post').aggregate([
+    {
+      $search: { // search index 이용 full-text search를 수행
+        index: 'titlte_index', // 사용할 인덱스 이름
+        text: {
+          query: keyword, // 검색어 
+          path: 'title' // 검색할 필드이름
+        }
+      }
+    }, 
+    { $sort: { _id: 1} }, // 검색 결과 정렬(1: 오름차순, -1: 내림차순)
+    { $skip: 5 }, // 건너뛰기
+    { $limit: 5 }, // 결과수 제한
+    { $project: { title: 1 } } // 조회할 필드 선택(1: 추가, 0: 제외)
+  ]).toArray();
+  console.log(posts); // { _id, title 2개 출력 }
+
+  res.render('search', { posts, numOfPage, currentPage, keyword });
+});
+
 module.exports = router;
+
+// { 프론트엔드와 백엔드 프로젝트를 분리 시키면 cors header 설정? 해서 연결해야함 }

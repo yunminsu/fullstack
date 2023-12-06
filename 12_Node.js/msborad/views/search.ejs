@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+
+  <link rel="stylesheet" href="/css/main.css">
+</head>
+<body class="grey-bg">
+  <%- include('nav') %>
+  <!-- 검색 UI -->
+  <!-- 검색 버튼 누르면 서버로 GET 요청 
+    input에 입력한 값도 쿼리 스트링으로 보낼 것임 -->
+  <input type="text" class="search">
+  <button type="button" class="search-btn">검색</button>
+
+  <h4 style="margin-left: 20px;">검색 결과</h4>
+
+  <div class="white-bg">
+    <% for (let i = 0; i < posts.length; i++) { %>
+      <div class="list-box">
+        <h4>
+          <a href="/post/detail/<%= posts[i]._id %>">
+            <%= posts[i].title %>    
+          </a>
+
+          <a href="/post/edit/<%= posts[i]._id %>">📝</a>
+
+          <span class="delete cursor-pointer" data-id="<%= posts[i]._id %>">🗑</span>
+          
+          <span class="view">조회수 <%= posts[i].view %></span>
+        </h4>
+        <p><%= posts[i].content %></p>
+      </div>  
+    <% } %>
+  </div>
+
+  <div class="next-bg">
+    <a href="/post/search?keyword=<%= keyword %>&nextId=<%= posts[posts.length - 1]?._id %>">다음</a>
+  </div>
+
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="/js/list.js"></script>
+
+</body>
+</html>

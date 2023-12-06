@@ -5,6 +5,7 @@ const session = require('express-session');
 const dotenv = require('dotenv');
 const path = require('path');
 const passport = require('passport');
+const MongoStore = require('connect-mongo'); // { 공식문서에서 가져온 변수명 }
 
 // 기본적인 서버 구조 작성하기
 // 1) dotenv 설정
@@ -41,7 +42,12 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false, // { 안 적으면 기본값이 false }
+    //{ 쿠키 만료 기간 설정을 안 해서(기본값: 세션) 브라우저를 닫으면 쿠키가 만료되서 로그아웃 됨 }
   },
+  store: MongoStore.create({
+    mongoUrl: `mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PASSWORD}@cluster0.ltiuyg2.mongodb.net/`, // { 키말고 URL 전체를 .env에 넣는 개발자들도 있음 }
+    dbName: 'board'
+  })
 }));
 // passport 미들웨어 설정
 app.use(passport.initialize()); // 요청 객체에 passport 설정을 심음(req.isAuthenticated, req.login, req.logout 등)
