@@ -153,15 +153,15 @@ root.render(
     // <SimpleRouter />
 
     // 17장 예제
-    // <ApiRequest />
+    <ApiRequest />
 
     // 18장 예제
     // 2. 리액트에 Redux Store 제공하기
     // ReduxTestApp 컴포넌트와 그 하위 자식들은 Redux Store에 접근 가능
     // Redux Store에 저장된 state들을 마음대로 꺼내 쓸 수 있음
-    <Provider store={store}>
-      <ReduxtestApp />
-    </Provider>
+    // <Provider store={store}>
+    //   <ReduxtestApp />
+    // </Provider>
 
   );
 
