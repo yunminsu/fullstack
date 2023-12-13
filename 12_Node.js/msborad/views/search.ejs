@@ -36,8 +36,12 @@
     <% } %>
   </div>
 
-  <div class="next-bg">
-    <a href="/post/search?keyword=<%= keyword %>&nextId=<%= posts[posts.length - 1]?._id %>">다음</a>
+  <div class="pagination-bg">
+    <% for (let i = 1; i <= numOfPage; i++) { %>
+      <a href="/post/search?page=<%= i %>&keyword=<%= keyword %>" class="<%= i == currentPage ? 'active' : '' %>">
+        <%= i %>
+      </a>
+    <% } %>
   </div>
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>

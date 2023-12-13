@@ -6,6 +6,7 @@ const dotenv = require('dotenv');
 const path = require('path');
 const passport = require('passport');
 const MongoStore = require('connect-mongo'); // { 공식문서에서 가져온 변수명 }
+const cors = require('cors');
 
 // 기본적인 서버 구조 작성하기
 // 1) dotenv 설정
@@ -28,6 +29,14 @@ app.set('port', process.env.PORT || 3002);
 app.set('view engine', 'ejs'); // view engine의 확장자 지정
 connect(); // 몽고디비에 연결
 
+// cors 설정 { router들 보다 위에 있어야 됨 }
+// Access-Control-Allow-Origin 헤더가 자동으로 추가됨
+app.use(cors({
+  credentials: true // 다른 도메인 간에 쿠키가 공유됨
+}));
+// (참고) axios에서도 도메인이 다른데, 쿠키를 공유해야 하는 경우
+// withCredentials: true 옵션을 줘서 요청을 보내야 함
+
 // 3) 공통 미들웨어 설정
 // (morgan, static, body-parser, cookie-parser, express-session)
 app.use(morgan('dev'));
@@ -42,7 +51,7 @@ app.use(session({
   cookie: {
     httpOnly: true,
     secure: false, // { 안 적으면 기본값이 false }
-    //{ 쿠키 만료 기간 설정을 안 해서(기본값: 세션) 브라우저를 닫으면 쿠키가 만료되서 로그아웃 됨 }
+    //{ 쿠키 만료 기간 설정을 안 해서(기본값: 세션) 브라우저를 닫아야 쿠키가 만료되서 로그아웃 됨 }
   },
   store: MongoStore.create({
     mongoUrl: `mongodb+srv://${process.env.MONGO_ID}:${process.env.MONGO_PASSWORD}@cluster0.ltiuyg2.mongodb.net/`, // { 키말고 URL 전체를 .env에 넣는 개발자들도 있음 }

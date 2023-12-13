@@ -3,8 +3,12 @@ document.querySelectorAll('.delete').forEach((deleteBtn, index) => {
   deleteBtn.addEventListener('click', async (e) => {
     try {
       const result = await axios.delete(`/post/${e.target.dataset.id}`); 
-      console.log(result.data);
+      console.log(result.data.message);
 
+      // { fetch는 err가 나더라도 여기서부터 코드 실행됨 }
+      if (!result.data.flag) {
+        return alert(result.data.message);
+      }
       // { status로 응답 관리 }
       if (result.status === 200) {
         // 왜 새로고침을 해야 삭제된 결과가 반영되는지?
@@ -20,6 +24,9 @@ document.querySelectorAll('.delete').forEach((deleteBtn, index) => {
       }
     } catch (err) {
       console.error(err);
+      // axios는 서버에서 에러 코드로 응답 시 에러 발생
+      // fetch는 아님
+      alert(err.response.data.message)
     }
   });
 });

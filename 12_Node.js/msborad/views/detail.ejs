@@ -14,6 +14,20 @@
     <p><%= post.content %></p>
     <!-- { 이미지 크기를 조절하고 싶으면 이미지 태그의 크기를 주면 됨 } -->
     <img src="<%= post.imgUrl %>" alt="img">
+
+    <hr style="margin-top: 60px;">
+    <div>
+      <% for (let i= 0; i < comments.length; i++) { %>
+      <p>
+        <strong><%= comments[i].author %></strong> <%= comments[i].content %>
+      </p>
+      <% } %>
+    </div>
+    <form action="/post/comment" method="post">
+      <input type="hidden" name="postId" value="<%= post._id %>">
+      <input type="text" name="content">
+      <button type="submit">등록</button>
+    </form>
   </div>
 </body>
 </html>

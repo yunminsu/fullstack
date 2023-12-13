@@ -87,7 +87,7 @@ router.get('/write', isLoggedIn, (req, res) => { // { middlewares의 isLoggedIn�
 // 업로드 완료 시 이미지의 URL도 생성해줌(req.file에 들어있음)
 router.post('/write', isLoggedIn, upload.single('img'), async (req, res, next) => {
   console.log(req.file); // 업로드 후 S3 객체 정보
-  console.log(req.file.location); // 이미지의 URL, img 태그 src 속성에 넣으면 동작
+  console.log(req.file?.location); // 이미지의 URL, img 태그 src 속성에 넣으면 동작
 
   console.log(req.body); // 클라이언트가 보낸 데이터 -> 요청 본문에 담김 -> body-parser가 분석해서 req.body에 객체로 저장
   
@@ -107,9 +107,26 @@ router.post('/write', isLoggedIn, upload.single('img'), async (req, res, next) =
     } else {
       await db.collection('post').insertOne({ 
         title, 
-        content, 
-        imgUrl: req.file.location, // 이미지 URL을 글과 함께 DB에 저장
-        view: 0 
+        content,
+        // 이미지 URL을 글과 함께 DB에 저장 
+        // imgUrl: req.file ? req.file.location : '', 
+        imgUrl: req.file?.location || '', 
+        // 글 등록 시 작성자 정보 넣기
+        user: req.user._id,
+        username: req.user.username,
+        // username(수정 가능한 정보라고 가정) 넣었을 때 문제점:
+        // 해당 유저가 글을 여러개 작성했는데 username이 바뀌면? 전부 찾아서 수정해야 됨
+        // 관계형DB: 사용자의 _id만 적어두고 JOIN을 써서 사용자의 정보를 가져와 합침
+        // 비관계형DB: 그냥 사용자 정보를 그대로 넣는 것이 관습임, 장점은 다른 컬렉션을 찾아볼 필요 없음
+        // 단점은 바뀐 정보 전부 찾아서 업데이트 하거나 업데이트 안됐으면 정보가 부정확 할 수 있음
+
+        // (비관계형DB 일 때) 개발자 선택 사항임
+        // 1. DB 입출력 속도 up, 데이터 정확도 down => 바뀔수 있는 정보도 같이 저장
+        // 2. DB 입출력 속도 down, 데이터 정확도 up => _id 값만 저장(추천)
+        // 2번을 선택하면 그 안에서도 선택지가 다양함
+        // 1) findOne을 2번 쓰던가(글도 가져오고, 사용자도 가져오고)
+        // 2) 몽구스의 populate, 몽고디비의 aggregate 연산자 중 $lookup
+        view: 0, 
       });
 
       // 동기식 요청이면 다른 페이지로 이동
@@ -154,6 +171,8 @@ router.get('/detail/:id', async (req, res, next) => {
     const post = await db.collection('post').findOne({ _id: new ObjectId(req.params.id) });
     console.log(post);  
 
+    const comments = await db.collection('comment').find({ postId: new ObjectId(req.params.id) }).toArray();
+
     // 2) 번에 대한 예외 처리
     if (!post) {
       const error = new Error('데이터 없음');
@@ -166,7 +185,7 @@ router.get('/detail/:id', async (req, res, next) => {
     }
 
     // Quiz: 데이터 꽂아서 보내고 바인딩하기
-    res.render('detail', { post });
+    res.render('detail', { post, comments });
   } catch (err) { // 1) 번에 대한 예외 처리
     err.message = '잘못된 url 입니다.';
     err.status = 400; // 응답코드 400번대는 클라이언트 에러 { 500번대는 서버, 200번대는 성공 }
@@ -216,11 +235,16 @@ router.patch('/:id', async (req, res) => {
         message: '제목을 입력하세요'
       });
     } else {
-      await db.collection('post').updateOne({ 
-        _id: new ObjectId(req.params.id) 
+      const result = await db.collection('post').updateOne({ 
+        _id: new ObjectId(req.params.id),
+        user: new ObjectId(req.user._id) 
       }, { 
         $set: { title, content } // { 원래 몽고디비는 set안 넣으면 데이터가 통째로 바꼈는데 버전이 업그레이드 되면서 에러나게 바뀜 }
       });
+
+      if (result.modifiedCount === 0) {
+        throw new Error('수정 실패');
+      }
 
       res.json({
         flag: true,
@@ -233,7 +257,7 @@ router.patch('/:id', async (req, res) => {
     // 보통 CSR 방식으로 개발 시 응답으로 json 데이터를 내려줌
     res.json({
       flag: false,
-      message: '수정 실패'
+      message: err.message
     });
    }
   });
@@ -260,7 +284,24 @@ router.patch('/:id', async (req, res) => {
 // { status로 응답 관리 } 
 router.delete('/:id', async (req, res) => {
   try {
-    await db.collection('post').deleteOne({ _id: new ObjectId(req.params.id) })
+    const result = await db.collection('post').deleteOne({ 
+      _id: new ObjectId(req.params.id), 
+      user: new ObjectId(req.user._id), // 본인이 쓴 글만 삭제되도록 조건 추가
+    });
+
+    // { 자기 아이디가 아닐 때 삭제 시 HTML 요소가 없어지지 않게 하는 방법 }
+    // { 방법 1 }
+    // if (!result.deletedCount) {
+    //   throw new Error('삭제 실패');
+    // }
+    // { 방법 2 }
+    if (!result.deletedCount) {
+      return res.json({
+        flag: false,
+        message: '삭제 실패'
+      }) 
+    }
+
     res.json({
       flag: true,
       message: '삭제 성공'
@@ -268,7 +309,10 @@ router.delete('/:id', async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({
+      flag: false,
       message: '삭제 실패'
+      // { err.message는 throw new Error('삭제 실패')에서 던져준 ''메시지 값이 담겨 있음 } 
+      // message: err.message
     });
   }
 });
@@ -294,7 +338,7 @@ router.get('/', async (req, res) => {
   // 페이지네이션 구현(1)
   // 페이지 번호는 쿼리 스트링 또는 URL 파라미터 사용
   // 1 -> 0, 2 -> 5, 3 -> 10
-  // const posts = await db.collection('post').find(({})).skip((req.query.page - 1) * 5).limit(5).toArray();
+  const posts = await db.collection('post').find(({})).skip((req.query.page - 1) * 5).limit(5).toArray();
 
   // 페이지 계산
   // 1~5 -> 6~10
@@ -308,12 +352,12 @@ router.get('/', async (req, res) => {
   // => 너무 많이 skip 하지 못하게 막거나 다른 페이지네이션을 방법 구현
   // 장점: 매우 빠름(_id 기준으로 뭔가 찾는건 DB가 가장 빠르게 하는 작업임)
   // 단점: 바로 다음 게시물만 가져올 수 있어서 1페이지 보다가 3페이지로 이동 불가
-  let posts;
-  if (req.query.nextId) {
-    posts = await db.collection('post').find({ _id: { $gt: new ObjectId(req.query.nextId) } }).limit(5).toArray(); // ObjectId로 대소 비교 가능
-  } else {
-    posts = await db.collection('post').find().limit(5).toArray(); // 처음 5개
-  }
+  // let posts;
+  // if (req.query.nextId) {
+  //   posts = await db.collection('post').find({ _id: { $gt: new ObjectId(req.query.nextId) } }).limit(5).toArray(); // ObjectId로 대소 비교 가능
+  // } else {
+  //   posts = await db.collection('post').find().limit(5).toArray(); // 처음 5개
+  // }
 
   res.render('list', { posts, numOfPage, currentPage });
 });
@@ -373,38 +417,38 @@ router.get('/search', async (req, res) => {
   // console.log(posts); // { _id, title 2개 출력 }
 
   // Quiz: 검색 결과 페이지에 페이지네이션 만들기
-  // const postsLength = await db.collection('post').aggregate([
-  //   {
-  //     $search: { 
-  //       index: 'titlte_index', 
-  //       text: {
-  //         query: keyword,
-  //         path: 'title' 
-  //       }
-  //     }
-  //   },
-  //   { $project: { title: 1 }}
-  // ]).toArray();
+  const postsLength = await db.collection('post').aggregate([
+    {
+      $search: { 
+        index: 'titlte_index', 
+        text: {
+          query: keyword,
+          path: 'title' 
+        }
+      }
+    },
+    { $project: { title: 1 }}
+  ]).toArray();
 
-  // const totalCount = postsLength.length; // 전체 document 개수
-  // const postsPerPage = 5; // 페이지 당 콘텐츠 개수 { 5는 하드코딩 => 프론트에서 지정하면 그 값을 쓰면 됨 }
-  // const numOfPage = Math.ceil(totalCount/postsPerPage); // 페이지 수
-  // const currentPage = req.query.page || 1; // 현재 페이지
+  const totalCount = postsLength.length; // 전체 document 개수
+  const postsPerPage = 5; // 페이지 당 콘텐츠 개수 { 5는 하드코딩 => 프론트에서 지정하면 그 값을 쓰면 됨 }
+  const numOfPage = Math.ceil(totalCount/postsPerPage); // 페이지 수
+  const currentPage = req.query.page || 1; // 현재 페이지
 
-  // const posts = await db.collection('post').aggregate([
-  //   {
-  //     $search: { 
-  //       index: 'titlte_index', 
-  //       text: {
-  //         query: keyword,
-  //         path: 'title' 
-  //       }
-  //     }
-  //   },
-  //   { $skip: (currentPage - 1) * postsPerPage},
-  //   { $limit: postsPerPage }, 
-  //   { $project: { title: 1 }}
-  // ]).toArray();
+  const posts = await db.collection('post').aggregate([
+    {
+      $search: { 
+        index: 'titlte_index', 
+        text: {
+          query: keyword,
+          path: 'title' 
+        }
+      }
+    },
+    { $skip: (currentPage - 1) * postsPerPage},
+    { $limit: postsPerPage }, 
+    { $project: { title: 1 }}
+  ]).toArray();
 
   // { 강사님이 푼거 }
   // const currentPage = req.query.page || 1; // 현재 페이지
@@ -433,48 +477,88 @@ router.get('/search', async (req, res) => {
   // console.log(result);
   // const totalCount = result[0].searchCount;
   // const numOfPage = Math.ceil(totalCount / postsPerPage); // 페이지 수
-  const lastId = req.query.nextId;
+
+  // { 다음 버튼으로 구현 }
+  // const lastId = req.query.nextId;
   
-  const postsLength = await db.collection('post').aggregate([
-    {
-      $search: { 
-        index: 'titlte_index', 
-        text: {
-          query: keyword,
-          path: 'title' 
-        }
-      }
-    },
-    { $project: { title: 1 }}
-  ]).toArray();
+  // const postsLength = await db.collection('post').aggregate([
+  //   {
+  //     $search: { 
+  //       index: 'titlte_index', 
+  //       text: {
+  //         query: keyword,
+  //         path: 'title' 
+  //       }
+  //     }
+  //   },
+  //   { $project: { title: 1 }}
+  // ]).toArray();
 
-  const currentIndex = postsLength.findIndex(item => item._id == lastId);
-  const nextIndex = currentIndex + 1;
+  // const currentIndex = postsLength.findIndex(item => item._id == lastId);
+  // const nextIndex = currentIndex + 1;
 
-  const totalCount = postsLength.length; // 전체 document 개수
-  const postsPerPage = 5; // 페이지 당 콘텐츠 개수 { 5는 하드코딩 => 프론트에서 지정하면 그 값을 쓰면 됨 }
-  const numOfPage = Math.ceil(totalCount/postsPerPage); // 페이지 수
-  const currentPage = req.query.page || 1; // 현재 페이지
+  // const totalCount = postsLength.length; // 전체 document 개수
+  // const postsPerPage = 5; // 페이지 당 콘텐츠 개수 { 5는 하드코딩 => 프론트에서 지정하면 그 값을 쓰면 됨 }
+  // const numOfPage = Math.ceil(totalCount/postsPerPage); // 페이지 수
+  // const currentPage = req.query.page || 1; // 현재 페이지
 
-  if (lastId)
-  const posts = await db.collection('post').aggregate([
-    {
-      $search: { // search index 이용 full-text search를 수행
-        index: 'titlte_index', // 사용할 인덱스 이름
-        text: {
-          query: keyword, // 검색어 
-          path: 'title' // 검색할 필드이름
-        }
-      }
-    }, 
-    { $sort: { _id: 1} }, // 검색 결과 정렬(1: 오름차순, -1: 내림차순)
-    { $skip: 5 }, // 건너뛰기
-    { $limit: 5 }, // 결과수 제한
-    { $project: { title: 1 } } // 조회할 필드 선택(1: 추가, 0: 제외)
-  ]).toArray();
-  console.log(posts); // { _id, title 2개 출력 }
+  // if (lastId)
+  // const posts = await db.collection('post').aggregate([
+  //   {
+  //     $search: { // search index 이용 full-text search를 수행
+  //       index: 'titlte_index', // 사용할 인덱스 이름
+  //       text: {
+  //         query: keyword, // 검색어 
+  //         path: 'title' // 검색할 필드이름
+  //       }
+  //     }
+  //   }, 
+  //   { $sort: { _id: 1} }, // 검색 결과 정렬(1: 오름차순, -1: 내림차순)
+  //   { $skip: 5 }, // 건너뛰기
+  //   { $limit: 5 }, // 결과수 제한
+  //   { $project: { title: 1 } } // 조회할 필드 선택(1: 추가, 0: 제외)
+  // ]).toArray();
+  // console.log(posts); // { _id, title 2개 출력 }
 
   res.render('search', { posts, numOfPage, currentPage, keyword });
+});
+
+// 댓글 기능 만들기
+// 1) 댓글 작성 UI에서 등록 누르면 서버로 댓글 전송
+// 2) 서버는 받은 댓글을 DB에 저장
+// 3) 글 상세 페이지에서 댓글 가져와 보여주기
+
+// 이때 댓글을 DB 어디에 저장할 것인지?
+// 1. post 컬렉션 document 안에 comments 필드를 만들어서 배열로 저장
+// 근데 이 방식은 댓글이 많아지면 문제가 복잡해지고 비효율적임
+// 1) 배열에서 원하는 항목 수정, 삭제가 어려움
+// 2) 배열의 일부만 가져올 수 없음(예: 댓글의 처음 5개만 가져오기)
+// 3) document 1개 용량 제한 16MB
+// 2. comment 컬렉션을 따로 만들기(권장)
+// 어떤 글(부모)의 댓글(자식)인지 해당 글의 _id도 함께 저장하기(관계 설정)
+
+// POST /post/comment
+router.post('/comment', async (req, res, next) => {
+  try {
+    const { content, postId } = req.body;
+    
+    console.log(req.user._id);
+    console.log(postId);
+
+
+    await db.collection('comment').insertOne({
+      content,
+      authorId: req.user._id,
+      author: req.user.username,
+      postId: new ObjectId(postId)
+    });
+
+    res.redirect(`/post/detail/${postId}`);
+  } catch (err) {
+    console.error(err);
+    // { 동기식이므로 에러를 보내줌, 비동기면 josn 보내줌 }
+    next(err);
+  }
 });
 
 module.exports = router;

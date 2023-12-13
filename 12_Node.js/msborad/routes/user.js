@@ -118,7 +118,8 @@ router.get('/logout', isLoggedIn, (req, res, next) => {
   // { app.js의 미들웨어 중 initialize() 때문에 login, logout 등 사용 가능, 라이브러리가 해주는것! }
   req.logout((logoutError) => { // 제거 후 콜백 함수가 실행 됨
     if (logoutError) return next(logoutError);
-    res.redirect('/'); // 로그아웃 완료 시 실행할 코드
+    res.json('로그아웃')
+    // res.redirect('/'); // 로그아웃 완료 시 실행할 코드
   }); 
 });
 // (정리) 로그인 기능 요약 정리
