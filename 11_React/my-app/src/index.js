@@ -58,6 +58,7 @@ import TimerContainer from './chapter7/7.3/ex3/TimerContainer';
 import ApiRequest from './chapter17/ApiRequest';
 import ReduxtestApp from './chapter18/ReduxtestApp';
 import { store } from './chapter18/app/store';
+import Test from './chapter17/Test'
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 
@@ -153,7 +154,8 @@ root.render(
     // <SimpleRouter />
 
     // 17장 예제
-    <ApiRequest />
+    // <ApiRequest />
+    <Test />
 
     // 18장 예제
     // 2. 리액트에 Redux Store 제공하기

@@ -12,7 +12,7 @@ function TextInputWithFocusButton() {
     // 마운트 됐을때(렌더링 이후에) 실행되므로 iunput 엘리먼트가 나옴
     console.log(inputEl);
 
-    // 활용 예: 로그인이나 회원강비 화면이 처음 보여졌을때
+    // 활용 예: 로그인이나 회원가입 화면이 처음 보여졌을때
     // 굳이 클릭하지 않아도 자동으로 포커스가 되어있게 하려면
     // useEffect + useRef 사용
     inputEl.current.focus();
