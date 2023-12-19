@@ -86,12 +86,32 @@ async function getComment(id) {
           console.error(err);
         }
       });
+      // { 좋아요 만들어 보기 }
+      const likeCount = document.createElement('p');
+      likeCount.textContent = 0;
+
+      const like = document.createElement('button');
+      like.textContent = '👍';
+      like.addEventListener('click', async () => {
+        try {
+          await axios.patch(`/comments/${comment._id}`, { likeCount: likeCount + 1 });
+          getComment(id);
+        } catch (err) {
+          console.error(err);
+        }
+      });
       // 버튼 추가
       td = document.createElement('td');
       td.appendChild(edit);
       row.appendChild(td);
       td = document.createElement('td');
       td.appendChild(remove);
+      row.appendChild(td);
+      td = document.createElement('td');
+      td.appendChild(like);
+      row.appendChild(td);
+      td = document.createElement('td');
+      td.appendChild(likeCount);
       row.appendChild(td);
       tbody.appendChild(row);
     });
@@ -123,7 +143,6 @@ document.getElementById('user-form').addEventListener('submit', async (e) => {
   e.target.married.checked = false;
 });
 
-// 댓글 등록 시
 document.getElementById('comment-form').addEventListener('submit', async (e) => {
   e.preventDefault();
   const id = e.target.userid.value;

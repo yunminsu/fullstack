@@ -1,0 +1,24 @@
+5. 
+{ 클라우드에서 사용하므로 mongoDB Atlas 들어가서 만들 수 있음 Atlas 페이지 -> Database -> Atlas Search -> Create -> title_index로 생성 -> Refine에서 Korean, Mapping 체크 해제, add field Mappings에서 title 지정}
+
+{ Compass 설치 방법
+  1) https://www.mongodb.com/ko-kr/cloud/atlas/efficiency 접속
+  2) 메뉴탭 리소스 -> 도구 및 커넥터 -> Data Exploration and Visualization의 Compass -> Download Compass -> MongoDB Compass(GUI) Download
+  3) Atlas의 Project -> Overview -> CONNECT -> Compass -> 2. Copy the connection string, then open MongoDB Compass에 있는 주소 복사 후 Compass 에 붙혀 넣고 6. 4) 에서 저장한 ID PW 입력
+
+  * 참고
+  - 새로고침 키: 컨트롤+R
+  - limit + skip 으로 페이지네이션, 상품 더보기 구현 가능
+  - 관계 설정 시 ObjectId로 연결하는 것을 권장 전체 정보를 넣어 연결하면 사용자 정보가 변경 됐을때 일일이 변경해줘야 함 
+}
+
+6.
+{(장점: 다른곳에서 로그인한걸 로그아웃 시켜줄 수 있다 -> ID로 생성된 세션을 찾아서 있으면 기존걸 끊고 새로 연결)}
+이 방식의 단점은? 
+
+PORT=8099
+COOKIE_SECRET=msboardsecret
+MONGO_ID=admin
+MONGO_PASSWORD=950826z
+AWS_ACCESS_KEY=AKIAZWDY3OOCFQUFLWMP 
+AWS_SECRET_KEY=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

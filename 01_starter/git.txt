@@ -98,5 +98,24 @@ branch: 독립적인 작업을 위한 프로젝트의 가지
 { // git branch로 브랜치 확인 }
 3. 브랜치 이동 (git checkout) // git checkout feature/login
 4. 작업 하기 -> 커밋 만들기 -> 푸쉬하기
-5. 
+5. main에 다른 사람이 먼저 작업 올림
+6. 깃헙에서 pull request 만들기
+7. (충돌 해결 가이드에 따라) 로컬에서 충돌 해결하고 다시 push하기
+- 간단한 충돌은 web editor로 수정 가능
+- 충돌이 많이 난 경우 command line 가이드에 따라 해결
+8. 리뷰 후 머지하기
+
+## 원격저장소의 브랜치 정보 받기
+- 원격에 있는 최신 정보 가져오기(업데이트)
+git fetch --all -p
+
+- 원격에 있는 새로운 브랜치 받기
+git checkout -t origin/feature/login
+
+[참고]
+https://techblog.woowahan.com/2553/
+https://ujuc.github.io/2015/12/16/git-flow-github-flow-gitlab-flow/
+
+
+
 

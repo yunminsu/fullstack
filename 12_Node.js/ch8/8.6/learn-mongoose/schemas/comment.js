@@ -17,7 +17,11 @@ const commentSchema = new Schema({
   createdAt: {
     type: Date,
     default: Date.now, // 기본값은 현재 시간으로
-  }
+  },
+  // { 좋아요 만들어 보기 }
+  likeCount: {
+    type: Number,
+  },
 });
 
 // 몽구스는 자동으로 복수형으로 변경하고 소문자로 변환한 후 이를 데이터베이스 컬렉션 이름으로 사용

@@ -4,6 +4,8 @@ const dotenv = require('dotenv');
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
+const multer = require('multer');
+const fs = require('fs');
 
 // dotenv: 환경변수(시스템에 따른 설정값이나 비밀키 등) 관리
 // 별도의 파일로 관리하는 이유는 보안 설정의 편의성 때문
@@ -61,6 +63,77 @@ app.use(session({
   },
   name: 'session-cookie' // 세션 쿠키 이름에 대한 설정, { name을 지정 안 하면 }기본값은 'connect.sid'
 }));
+
+// 미들웨어간 데이터 공유 및 전달하기
+// 1) app.set은 서버 내내 유지
+// 2) req.session은 나에 한해서(=같은 세션 안에서) 계속 유지하고 싶은 데이터 => 로그인 유저 정보
+// 3) req, res는 요청 하나 동안만 유지(1회성)
+app.use((req, res, next) => {
+  req.data = '전달 데이터';
+  res.locals.data = '데이터 넣기'; // 일반적으로 이렇게 사용
+  next();
+});
+
+// multer 설정하기
+// 서버 시작할 때 uploads 폴더 만들기
+try {
+  fs.readdirSync('uploads');
+} catch (err) {
+  console.error('uploads 폴더가 없어 uploads 폴더를 생성합니다.');
+  fs.mkdirSync('uploads');
+}
+
+// multer 자체가 미들웨어는 아니고, multer 함수를 호출하면 나오는 객체 안에 4가지 미들웨어가 들어있음
+const upload = multer({
+  storage: multer.diskStorage({ // 하드디스크에 저장(실제 서버 운영 시 서버 디스크 대신에 클라우드 스토리지 서비스에 저장하는게 좋음)
+    destination(req, file, done) { // 어디에 저장할지
+      done(null, 'uploads/'); // 주의! uploads 폴더가 없으면 업로드 시 에러남
+    },
+    filename(req, file, done) { // 어떤 이름으로 저장할지
+      const ext = path.extname(file.originalname); // 확장자 추출
+      done(null, path.basename(file.originalname, ext) + Date.now() + ext);
+      // 파일명 + 현재 날짜/시간 + 확장자
+      // 이렇게 하는 이유? 파일 이름이 중복되면 덮어씌우기 때문에
+    }
+    // done(에러 시 에러값, 성공 시 전달할 값); // 에러 발생 시 에러 처리 미들웨어로
+  }),
+  limits: { fileSize: 5 * 1024 * 1024 } // 파일 사이즈(바이트 단위): 5MB로 제한(그 이상 없로드 시 400번대 에러 발생)
+});
+
+app.get('/upload', (req, res) => {
+  res.sendFile(path.join(__dirname, 'multipart.html'));
+});
+
+// multer의 4가지 미들웨어
+// 1) 파일을 하나만 업로드하는 경우 single 미들웨어 사용
+// => 인자값은 input 태그의 name 속성과 일치해야 됨
+// app.post('/upload', upload.single('image'), (req, res) => { // 라우터 전에 미들웨어로 장착
+//   console.log(req.file); // 업로드 성공 시 파일 정보가 저장됨
+//   console.log(req.body); // { title: '' }
+//   res.send('ok');
+// });
+// 2) 여러 파일을 업로드하는 경우 array 미들웨어 사용
+// app.post('/upload', upload.array('image'), (req, res) => {
+//   console.log(req.files); // 이 때는 file이 아닌 files임
+//   console.log(req.body);
+//   res.send('ok');
+// });
+// 3) 여러 파일(input 태그를 여러 개 사용해서 name이 다른 경우)을 업로드하는 경우 fields 미들웨어 사용
+app.post('/upload', 
+  upload.fields([{ name: 'image1' }, { name: 'image2' }]), 
+  (req, res) => {
+    console.log(req.files.image1);
+    console.log(req.files.image2);
+    console.log(req.body);
+    res.send('ok');
+  }
+);
+// 4) 멀티파트로 보내는데 파일을 업로드하지 않을 때(잘 안씀)
+// app.post('/upload', upload.none(), (req, res) => {
+//   console.log(req.files); // undefined
+//   console.log(req.body);
+//   res.send('ok');
+// });
 
 app.get('/', (req, res) => {
   // 쿠키 사용하기

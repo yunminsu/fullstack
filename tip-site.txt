@@ -47,6 +47,16 @@ ex) box-orient
 * 포맷(숫자,날짜 등) 적용 참고
 - https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Intl
 
+11.
+* node js 사용량 확인
+- 구글에 'npm trends' 검색
+- https://npmtrends.com/  
+
+12.
+* 선생님 github
+- https://github.com/geoblo
+
+
 
 Extention
 (React)

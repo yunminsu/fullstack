@@ -4,6 +4,8 @@ const morgan = require('morgan');
 
 const connect = require('./schemas'); // { 생략하면 index 가져옴 }
 const indexRouter = require('./routes'); // { 생략하면 index 가져옴 }
+const usersRouter = require('./routes/users');
+const commentsRouter = require('./routes/comments');
 
 const app = express();
 app.set('port', process.env.PORT || 3002);
@@ -16,6 +18,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/', indexRouter);
+app.use('/users', usersRouter);
+app.use('/comments', commentsRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터가 없습니다.`); // { 밑에 err 코드의 err.message 값 }
