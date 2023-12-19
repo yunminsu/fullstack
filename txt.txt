@@ -16,6 +16,26 @@
 {(장점: 다른곳에서 로그인한걸 로그아웃 시켜줄 수 있다 -> ID로 생성된 세션을 찾아서 있으면 기존걸 끊고 새로 연결)}
 이 방식의 단점은? 
 
+서버 배포 - Lightsail
+1. aws접속
+2. lightsail 검색 후 let`s get start? 클릭
+3. Instance location 설정 (서울, 위치가 가까울 수록 속도 빠름)
+4. Select a platform -> Linux (Windows 보다 저렴)
+5. Select a blueprint -> Node.js
+6. 가격 및 이름 설정
+7. 상세보기 -> 기본 생성되는 서버: 공용 IPv4
+8. SSH 연결 -> 리눅스창 뜸 -> git clone 배포할 서버 깃주소
+9. ls -al 명령어로 확인
+10. cd /opt/bitnami 로 접근 -> sudo ./ctlscript.sh stop apache로 아파치 서버 정지
+11. cd ~/배포할서버프로젝트명/ 로 접근 -> sudo vim .env
+i2. i 누르고 작성, 다 작성되면 esc -> 쉬프트+; -> wq (저장하고 나가기)
+13. npm ci 으로 패키지 설치 (기존 node_modules 삭제하고 재 설치)
+14. sudo NODE_ENV=production PORT=80(80은 기본 포트번호, 생략됨 다르게하면 일일이 쳐줘야 함) node app 으로 서버 실행
+15. 서버에서 cors의 origin: '도메인주소' 으로 오리진 허용, 여러 도메인 사용하고 싶으면 배열(['도메인주소', '도메인주소2'])로 설정 
+16. 서버 포트 번호를 공용 IPv4로 변경
+17. 서버 코드 변경되면 리눅스 터미널 창에서 git pull로 변경
+
+
 PORT=8099
 COOKIE_SECRET=msboardsecret
 MONGO_ID=admin
