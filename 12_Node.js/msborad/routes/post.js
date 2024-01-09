@@ -330,6 +330,7 @@ router.delete('/:id', async (req, res) => {
 
 // GET /post 라우터 재작성
 router.get('/', async (req, res) => {
+  console.log(req.query.page);
   // 테스트
   // limit(5): 위에서 5개만 가져옴
   // skip(5): 5개를 건너뜀

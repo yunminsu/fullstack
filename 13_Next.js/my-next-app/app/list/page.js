@@ -9,6 +9,7 @@ export default function List() { // { 함수 이름은 아무렇게나 작명 �
   const products = ['Apple', 'Orange', 'Grape']
 
   // 주문 수량
+  // state는 client 컴포넌트에서만 사용 가능
   const [orederCount, setOrderCount] = useState([0, 10, 3]);
 
   return (
@@ -66,17 +67,37 @@ export default function List() { // { 함수 이름은 아무렇게나 작명 �
             <h4>{product}</h4>
 
             {/* 주문 수량 만들기 */}
+            {/* onClick 이벤트 리스너와 이벤트 핸들러 함수를 쓰려면 
+              => client 컴포넌트로 변경 */}
             <button 
-              type="button" 
-              onClick={() => {setOrderCount(count => ({...count, [index]: count[index]-1 }))}}
+              // Quiz: 수량 변경 기능 만들기
+              // 배열/객체의 state를 변경려면
+              // 복사본은 만들고 복사본에 변화를 주고
+              // 마지막으로 set함수에 복사본을 넣어주면 끝
+
+              // 내가 푼거
+              // onClick={() => {setOrderCount(count => ({...count, [index]: count[index]-1 }))}}
+              // 선생님 풀이
+              type="button" onClick={() => {
+                const copyArray = [...orederCount];
+                copyArray[index]--;
+                setOrderCount(copyArray);
+                }} 
               disabled={orederCount[index]===0}
             >
               -
             </button>
             <span>{orederCount[index]}</span>
             <button 
-              type="button" 
-              onClick={() => {setOrderCount(count => ({...count, [index]: count[index]+1 }))}}
+              // 내가 푼거
+              // onClick={() => {setOrderCount(count => ({...count, [index]: count[index]+1 }))}}
+              // 선생님 풀이
+              type="button" onClick={() => {
+                const copyArray = [...orederCount];
+                copyArray[index]++;
+                setOrderCount(copyArray);
+                }} 
+
             >
               +
             </button>

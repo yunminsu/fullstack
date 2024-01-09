@@ -1,0 +1,8 @@
+
+## CSS
+globals.css 사용 안 할거면 내용 삭제 후 개인적으로 사용 할 CSS 작성
+page마다 css를 나눠 사용하는 것이 좋음
+page 폴더마다 page.module.css를 만들어서 사용
+
+## app/page.js
+page.js 내용 삭제 후 코딩
