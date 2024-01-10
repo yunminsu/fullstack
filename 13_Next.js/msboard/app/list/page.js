@@ -1,12 +1,13 @@
 import { connect } from "@/database";
 import ListItem from "./ListItem";
+import list from "@/pages/api/list";
 
 export default async function List() {
   // (참고) DB 입출력 코드는 server 컴포넌트에서만 쓰기
   const client = await connect
   const db = await client.db('board');
   const posts = await db.collection('post').find().toArray();
-
+  
   return (
     // <div className="list-bg">
     //   <div className="list-item">
