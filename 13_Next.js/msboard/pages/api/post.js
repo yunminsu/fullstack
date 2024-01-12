@@ -1,4 +1,5 @@
 import { connect } from "@/database";
+import { ObjectId } from "mongodb";
 
 export default async function handler(req, res) {
   const client = await connect;
@@ -6,7 +7,7 @@ export default async function handler(req, res) {
   
   if (req.method === 'GET') {
     res.json({ mesaage: 'GET 요청!' });
-  } else {
+  } else if (req.method === 'POST') {
     const { title, content } = req.body;
 
     // 데이터 유효성 검사
@@ -39,6 +40,29 @@ export default async function handler(req, res) {
       res.status(500).josn({
         flag: false,
         message: '등록 실패'
+      });
+    }
+  } else if (req.method === 'DELETE') {
+    try {
+      const { postId } = req.query;
+
+      const result = await db.collection('post').deleteOne({ 
+        _id: new ObjectId(postId) 
+      })
+
+      if (result.deletedCount === 0) {
+        throw new Error('삭제 실패');
+      }
+
+      res.json({
+        flag: true,
+        message: '삭제 성공!'  
+      });
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({
+        flag: true,
+        message: err.mesaage  
       });
     }
   }

@@ -19,7 +19,8 @@ export default function Write() {
 // 2) 작성한 글을 서버로 전송
 // 3) 서버에서 검사 후 DB에 저장
 
-// API Routes 방식(참고: 최신 버전에서는 Route Handlers 방식으로 대체)
+// API Routes 방식{(Pages Route)}
+// (참고: 최신 버전에서는 Route Handlers 방식{(App Route)}으로 대체 => /app 폴더 안에 route.js로 정의)
 // api 코드이 폴더 구조
 // /pages/api/test.js => /api/test로 HTTP 요청을 보내면 test.js 안의 코드가 실행됨
 // (실습)
